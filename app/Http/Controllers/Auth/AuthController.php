@@ -2,71 +2,84 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\EmailLogin;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function login(Request $request)
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->validate($request, ['email' => 'required|email|max:255']);
+        $email = $request->email;
+        User::firstOrCreate(['email' => $email]);
+        $emailLogin = EmailLogin::createForEmail($email);
+
+        Mail::queue('emails.email-login', ['token' => $emailLogin->token], function ($m) use ($email) {
+            $m->from('noreply@myapp.com', config('app.app_name'));
+            $m->to($email)->subject(config('app.app_name') . ' Login');
+        });
+        return response()->json(['message' => 'Email successfuly send']);
+    }
+
+    public function authenticateEmail($token)
+    {
+        $emailLogin = EmailLogin::validFromToken($token);
+        $user = User::where('email', $emailLogin->email)->firstOrFail();
+        $user->token = JWTAuth::fromUser($user);
+        return response()->json(['user' => $user]);
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Redirect the user to the Facebook authentication page.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return Response
      */
-    protected function validator(array $data)
+    public function redirectToProvider($provider)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Obtain the user information from GitHub.
      *
-     * @param  array  $data
+     * @return Response
+     */
+    public function handleProviderCallback($provider)
+    {
+        try {
+            $user = Socialite::driver($provider)->user();
+        } catch (Exception $e) {
+            return response()->redirectTo("auth/{$provider}");
+        }
+
+        $authUser = $this->findOrCreateUser($provider, $user);
+        $authUser->token = JWTAuth::fromUser($authUser);
+        return response()->json(['user' => $authUser]);
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $githubUser
      * @return User
      */
-    protected function create(array $data)
+    private function findOrCreateUser($provider, $user)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $authUser = User::where([$provider . '_id' => $user->id])->orWhere(['email' => $user->getEmail()])->first();
+        $authUser->facebook_id = $user->getId();
+        $authUser->facebook_token = $user->token;
+        $authUser->name = $user->getName();
+        $authUser->email = $user->getEmail();
+        $authUser->save();
+
+        return $authUser;
     }
+
 }

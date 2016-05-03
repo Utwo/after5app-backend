@@ -16,10 +16,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if(auth()->check()){
-            $user = User::pimp()->find(auth()->user()->id);    
+        if(auth()->check() && ! $request->has('username')){
+            $user = User::pimp()->findOrFail(auth()->user()->id);
         }else{
-            $user = User::pimp()->where('username', $request->username)->first();
+            $user = User::pimp()->where('name', $request->username)->firstOrFail();
         }
         return response()->json(['user' => $user]);
     }

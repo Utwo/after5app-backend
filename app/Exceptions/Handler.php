@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
             return response()->json(['token_invalid'], $e->getStatusCode());
         }
 
-       /* if (!($e instanceof HttpResponseException)) {
+        if (!($e instanceof HttpResponseException)) {
             if(env('APP_DEBUG')){
                 $status = 400;
 
@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
                 return response()->json(['error' => $e->getMessage()], $status);
             }
             return response()->json(['error' => 'Whoops, looks like something went wrong'], 400);
-        }*/
+        }
 
         return parent::render($request, $e);
     }

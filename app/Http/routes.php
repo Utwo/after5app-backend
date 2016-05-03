@@ -13,13 +13,17 @@
 
 Route::get('/', ['uses' => 'HomeController@index']);
 
+Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider')->where('provider', 'facebook');
+Route::get('auth/{provider}/callback', ['as' => 'api.v1.facebook.callback', 'uses' => 'Auth\AuthController@handleProviderCallback'])->where('provider', 'facebook');
+Route::get('auth/email-authenticate/{token}', ['as' => 'auth.email-authenticate', 'uses' => 'Auth\AuthController@authenticateEmail']);
+
+Route::post('auth/login', ['uses' => 'Auth\AuthController@login']);
+
 Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
 
     Route::get('project', ['uses' => 'ProjectController@index']);
     Route::get('skill', ['uses' => 'SkillController@index']);
     Route::get('user/{username?}', ['uses' => 'UserController@index']);
-
-    Route::post('facebook-login', ['uses' => 'Auth\OAuthController@facebook_login']);
 
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::post('project', ['uses' => 'ProjectController@store']);

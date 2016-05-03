@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "tymon/jwt-auth": "0.5.*",
         "jedrzej/pimpable": "0.0.4",
-        "facebook/php-sdk-v4" : "~5.0"
+        "laravel/socialite": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
