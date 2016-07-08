@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['uses' => 'HomeController@index']);
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider')->where('provider', 'facebook');
 Route::get('auth/{provider}/callback', ['as' => 'api.v1.facebook.callback', 'uses' => 'Auth\AuthController@handleProviderCallback'])->where('provider', 'facebook');

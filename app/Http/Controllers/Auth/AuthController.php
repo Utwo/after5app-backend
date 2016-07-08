@@ -25,15 +25,19 @@ class AuthController extends Controller
             $m->from('noreply@myapp.com', config('app.app_name'));
             $m->to($email)->subject(config('app.app_name') . ' Login');
         });
+
         return response()->json(['message' => 'Email successfuly send']);
     }
 
-    public function authenticateEmail($token)
+    public function authenticateEmail(Request $request)
     {
-        $emailLogin = EmailLogin::validFromToken($token);
+        $emailLogin = EmailLogin::validFromToken($request->token);
         $user = User::where('email', $emailLogin->email)->firstOrFail();
-        $user->token = JWTAuth::fromUser($user);
-        return response()->json(['user' => $user]);
+        $token = JWTAuth::fromUser($user);
+        if ($request->isJson() || $request->ajax()) {
+            return response()->json(['user' => $user]);
+        }
+        return response()->redirectToRoute('home', ['token' => $token]);
     }
 
     /**
@@ -60,8 +64,8 @@ class AuthController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($provider, $user);
-        $authUser->token = JWTAuth::fromUser($authUser);
-        return response()->json(['user' => $authUser]);
+        $token = JWTAuth::fromUser($authUser);
+        return response()->redirectToRoute('home', ['token' => $token]);
     }
 
     /**
