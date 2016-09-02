@@ -34,10 +34,7 @@ class AuthController extends Controller
         $emailLogin = EmailLogin::validFromToken($request->token);
         $user = User::where('email', $emailLogin->email)->firstOrFail();
         $token = JWTAuth::fromUser($user);
-        if ($request->isJson() || $request->ajax()) {
-            return response()->json(['user' => $user]);
-        }
-        return response()->redirectToRoute('home', ['token' => $token]);
+        return response()->json(['user' => $user, 'token' => $token]);
     }
 
     /**

@@ -1,25 +1,19 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
-
-Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider')->where('provider', 'facebook');
-Route::get('auth/{provider}/callback', ['as' => 'api.v1.facebook.callback', 'uses' => 'Auth\AuthController@handleProviderCallback'])->where('provider', 'facebook');
-Route::get('auth/email-authenticate/{token}', ['as' => 'auth.email-authenticate', 'uses' => 'Auth\AuthController@authenticateEmail']);
-
-Route::post('auth/login', ['uses' => 'Auth\AuthController@login']);
-
-Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
+Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
 
     Route::get('project', ['uses' => 'ProjectController@index']);
     Route::get('skill', ['uses' => 'SkillController@index']);
@@ -44,9 +38,3 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['api']], function () {
     });
 });
 
-Route::post('token/{user}', function ($id) {
-    $user = App\User::findOrFail($id);
-
-    $token = JWTAuth::fromUser($user);
-    return response()->json(['jwt-token' => $token]);
-});

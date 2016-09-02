@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CommentsTableSeeder extends Seeder
+class ApplicationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,8 @@ class CommentsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('comments')->delete();
+        DB::table('applications')->delete();
 
-        factory(\App\Comment::class, 20)->create();
+        factory(\App\Application::class, 20)->create();
     }
 }
