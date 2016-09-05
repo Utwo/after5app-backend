@@ -17,7 +17,7 @@ class SkillController extends Controller
     public function index()
     {
         $skill = Skill::all();
-        return response()->json(['skill' => $skill]);
+        return response()->json($skill);
     }
 
     /**
@@ -30,17 +30,5 @@ class SkillController extends Controller
     {
         $skill = Skill::create($request->all());
         return response()->json(['skill' => $skill]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request)
-    {
-        Skill::findOrFail($request->skill)->delete();
-        return response()->json(['message' => 'Skill deleted successfully']);
     }
 }

@@ -24,12 +24,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
         Route::put('project/{project}', ['uses' => 'ProjectController@update']);
         Route::delete('project/{project}', ['uses' => 'ProjectController@destroy']);
 
-        Route::get('application', ['uses' => 'ApplicationController@index']);
+        //Route::get('application', ['uses' => 'ApplicationController@index']);
         Route::post('application', ['uses' => 'ApplicationController@store']);
         Route::delete('application/{application}', ['uses' => 'ApplicationController@destroy']);
 
         Route::post('skill', ['uses' => 'SkillController@store']);
-        Route::delete('skill/{skill}', ['uses' => 'SkillController@destroy']);
 
         Route::post('comment', ['uses' => 'CommentController@store']);
         Route::delete('comment/{comment}', ['uses' => 'CommentController@destroy']);

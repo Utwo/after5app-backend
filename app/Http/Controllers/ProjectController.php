@@ -17,7 +17,7 @@ class ProjectController extends Controller
     public function index()
     {
         $project = Project::simplePaginate();
-        return response()->json(['project' => $project]);
+        return response()->json($project);
     }
 
     /**
@@ -57,7 +57,9 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request)
     {
-        Project::findOrFail($request->project)->delete();
+        $project = Project::findOrFail($request->project);
+        $this->authorize('user_own_project', $project);
+        $project->delete();
         return response()->json(['message' => 'Project deleted successfully']);
     }
 }

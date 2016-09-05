@@ -21,7 +21,7 @@ class UserController extends Controller
         }else{
             $user = User::pimp()->where('name', $request->username)->firstOrFail();
         }
-        return response()->json(['user' => $user]);
+        return response()->json($user);
     }
 
     /**

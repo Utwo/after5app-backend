@@ -12,7 +12,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Requests\CommentStoreRequest $request)
@@ -27,12 +27,14 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        Comment::findOrFail($request->comment)->delete();
+        $comment = Comment::findOrFail($request->comment);
+        $this->authorize('user_own_comment', $comment);
+        $comment->delete();
         return response()->json(['message' => 'Comment deleted successfully']);
     }
 }

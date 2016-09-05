@@ -23,5 +23,5 @@ Route::post('token/{user}', function ($id) {
     $user = App\User::findOrFail($id);
 
     $token = JWTAuth::fromUser($user);
-    return response()->json(['jwt-token' => $token]);
+    return response()->json(['user' => $user,'jwt-token' => $token]);
 });

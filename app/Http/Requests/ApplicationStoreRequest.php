@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Application;
 use App\Http\Requests\Request;
 
 class ApplicationStoreRequest extends Request
@@ -13,7 +14,11 @@ class ApplicationStoreRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        $project_application_count = Application::where('user_id', auth()->user()->id)->where('project_id', $this->project_id)->count();
+        if ($project_application_count == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**

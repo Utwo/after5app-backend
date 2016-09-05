@@ -24,7 +24,7 @@ class SkillStoreRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:skills|min:2'
+            'name' => 'required|string|unique:skills|min:1'
         ];
     }
 }

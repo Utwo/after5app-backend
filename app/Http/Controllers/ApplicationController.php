@@ -17,13 +17,13 @@ class ApplicationController extends Controller
     public function index()
     {
         $application = Application::simplePaginate();
-        return response()->json(['application' => $application]);
+        return response()->json($application);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Requests\ApplicationStoreRequest $request)
@@ -38,12 +38,14 @@ class ApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        Application::findOrFail($request->application)->delete();
+        $application = Application::findOrFail($request->application);
+        $this->authorize('user_own_application', $application);
+        $application->delete();
         return response()->json(['message' => 'Application deleted successfully']);
     }
 }

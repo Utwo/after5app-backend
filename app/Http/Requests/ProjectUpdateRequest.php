@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Project;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectUpdateRequest extends Request
 {
@@ -13,7 +15,7 @@ class ProjectUpdateRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('user_own_project', Project::findOrFail(request()->route()->project));
     }
 
     /**
