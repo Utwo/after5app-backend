@@ -23,6 +23,11 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function Favorite()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
+
     public function Application()
     {
         return $this->hasMany(Application::class);

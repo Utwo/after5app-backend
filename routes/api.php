@@ -21,6 +21,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
 
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::post('project', ['uses' => 'ProjectController@store']);
+        Route::post('project/{project}/favorite', ['uses' => 'ProjectController@favorite']);
         Route::put('project/{project}', ['uses' => 'ProjectController@update']);
         Route::delete('project/{project}', ['uses' => 'ProjectController@destroy']);
 

@@ -35,6 +35,12 @@ class ProjectController extends Controller
         return response()->json(['project' => $project]);
     }
 
+    public function favorite(Request $request){
+        $project = Project::findOrFail($request->project);
+        $result = $project->favorite()->toggle(auth()->user());
+        return response()->json($result);
+    }
+
     /**
      * Update the specified resource in storage.
      *
