@@ -19,7 +19,6 @@ class CreateProjectsTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->text('application_questions')->nullable();
-            $table->text('positions')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedInteger('user_id');
 

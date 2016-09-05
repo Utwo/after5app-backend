@@ -11,10 +11,9 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'positions', 'application_questions', 'status'];
+    protected $fillable = ['title', 'description', 'application_questions', 'status'];
 
     protected $casts = [
-        'positions' => 'json',
         'application_questions' => 'json',
     ];
 
@@ -38,8 +37,8 @@ class Project extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function Skill()
+    public function Position()
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->hasMany(Position::class);
     }
 }

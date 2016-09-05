@@ -30,7 +30,7 @@ class ApplicationController extends Controller
     {
         $application = new Application($request->all());
         $application->user_id = auth()->user()->id;
-        $application->project_id = $request->project_id;
+        $application->position_id = $request->position_id;
         $application->save();
         return response()->json(['application' => $application]);
     }

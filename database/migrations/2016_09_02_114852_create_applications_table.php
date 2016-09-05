@@ -19,12 +19,12 @@ class CreateApplicationsTable extends Migration
             $table->string('message');
             $table->text('answers');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('project_id');
+            $table->unsignedInteger('position_id');
 
             $table->timestamp('created_at');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
         });
     }
 

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ProjectTableSeeder extends Seeder
+class PositionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,8 @@ class ProjectTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('projects')->delete();
+        DB::table('positions')->delete();
 
-        factory(\App\Project::class, 20)->create();
+        factory(\App\Position::class, 20)->create();
     }
 }

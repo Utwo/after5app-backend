@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -20,11 +20,19 @@ class Skill extends Model
      */
     public $timestamps = false;
 
-    public function User(){
-        return $this->belongsToMany(User::class);
+    /**
+     * Set the name attribute.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = str_slug(strtolower($value), '-');
     }
 
-    public function Project(){
-        return $this->belongsToMany(Project::class);
+    public function User()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

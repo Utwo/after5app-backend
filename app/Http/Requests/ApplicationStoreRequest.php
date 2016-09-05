@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Application;
 use App\Http\Requests\Request;
+use App\Position;
 
 class ApplicationStoreRequest extends Request
 {
@@ -14,8 +15,10 @@ class ApplicationStoreRequest extends Request
      */
     public function authorize()
     {
-        $project_application_count = Application::where('user_id', auth()->user()->id)->where('project_id', $this->project_id)->count();
-        if ($project_application_count == 0) {
+        $project = Position::findOrFail($this->position_id)->Project;
+        $position_application_count = Application::where('user_id', auth()->user()->id)->where('position_id', $this->position_id)->count();
+        if ($position_application_count == 0 && $project->user_id != auth()->user()->id) {
+            //daca nu este proiectul meu si daca nu mai am aplicatii la aceasta pozitie
             return true;
         }
         return false;
@@ -33,7 +36,7 @@ class ApplicationStoreRequest extends Request
             'answers' => 'sometimes|required',
             'answers.*.question' => 'required_with:answers|string',
             'answers.*.text' => 'required_with:answers|string',
-            'project_id' => 'required|integer|exists:projects,id'
+            'position_id' => 'required|integer|exists:positions,id'
         ];
     }
 }

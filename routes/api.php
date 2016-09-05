@@ -25,6 +25,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
         Route::put('project/{project}', ['uses' => 'ProjectController@update']);
         Route::delete('project/{project}', ['uses' => 'ProjectController@destroy']);
 
+        Route::post('position', ['uses' => 'PositionController@store']);
+        Route::put('position/{position}', ['uses' => 'PositionController@update']);
+        Route::delete('position/{position}', ['uses' => 'PositionController@destroy']);
+
         //Route::get('application', ['uses' => 'ApplicationController@index']);
         Route::post('application', ['uses' => 'ApplicationController@store']);
         Route::delete('application/{application}', ['uses' => 'ApplicationController@destroy']);

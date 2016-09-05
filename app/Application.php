@@ -24,7 +24,7 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function Project(){
-        return $this->belongsTo(Project::class);
+    public function Position(){
+        return $this->belongsTo(Position::class);
     }
 }

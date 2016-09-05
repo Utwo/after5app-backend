@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use App\Project;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class ProjectStoreRequest extends Request
+class PositionStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,7 @@ class ProjectStoreRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('user_own_project', Project::findOrFail($this->project_id));
     }
 
     /**
@@ -24,11 +26,10 @@ class ProjectStoreRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|string|min:4',
             'description' => 'required|string|min:4',
-            'application_questions' => 'sometimes|required',
-            'application_questions.*' => 'required_with:application_questions|string',
-            'status' => 'sometimes|required|boolean'
+            'status' => 'sometimes|required|boolean',
+            'project_id' => 'required|integer|exists:projects,id',
+            'position_name' => 'required|string|min:1|max:15',
         ];
     }
 }

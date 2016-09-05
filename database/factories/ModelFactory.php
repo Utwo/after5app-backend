@@ -24,11 +24,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
+    $array = [];
+    for($i=0;$i<=random_int(1, 6);$i++){
+        $array[] = $faker->sentence();
+    }
     return [
         'title' => $faker->text(rand(10, 15)),
         'description' => $faker->sentence,
-        'positions' => json_decode('[{"position_name": "' . $faker->word . '", "description": "' . $faker->sentence() . '"}, {"position_name": "' . $faker->word . '", "description": "' . $faker->sentence() . '"}]'),
-        'application_questions' => json_decode('["' . $faker->sentence() . '" ]'),
+        'application_questions' => $array,
         'status' => $faker->boolean(),
         'user_id' => \App\User::all()->random(1)->id
     ];
@@ -45,7 +48,7 @@ $factory->define(App\Application::class, function (Faker\Generator $faker) {
         'message' => $faker->sentence(),
         'answers' => json_decode('[{"question": "' . $faker->sentence() . '", "text": "' . $faker->sentence() . '"}]'),
         'user_id' => \App\User::all()->random(1)->id,
-        'project_id' => \App\Project::all()->random(1)->id,
+        'position_id' => \App\Position::all()->random(1)->id,
     ];
 });
 
@@ -54,5 +57,14 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker) {
         'text' => $faker->sentence(),
         'user_id' => \App\User::all()->random(1)->id,
         'project_id' => \App\Project::all()->random(1)->id,
+    ];
+});
+
+$factory->define(App\Position::class, function (Faker\Generator $faker) {
+    return [
+        'skill_id' => \App\Skill::all()->random(1)->id,
+        'project_id' => \App\Project::all()->random(1)->id,
+        'description' => $faker->sentence(),
+        'status' => $faker->boolean(),
     ];
 });
