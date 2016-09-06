@@ -16,19 +16,7 @@ class SkillController extends Controller
      */
     public function index()
     {
-        $skill = Skill::all();
+        $skill = Skill::pimp()->get();
         return response()->json($skill);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Requests\SkillStoreRequest $request)
-    {
-        $skill = Skill::create($request->all());
-        return response()->json(['skill' => $skill]);
     }
 }

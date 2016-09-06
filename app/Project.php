@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Jedrzej\Pimpable\PimpableTrait;
 
 class Project extends Model
 {
+    use PimpableTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -16,6 +18,8 @@ class Project extends Model
     protected $casts = [
         'application_questions' => 'json',
     ];
+
+    protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'user'];
 
     public function User()
     {

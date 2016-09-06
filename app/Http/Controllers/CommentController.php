@@ -9,6 +9,18 @@ use App\Http\Requests;
 
 class CommentController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $comment = Comment::pimp()->where('project_id', $request->project)->simplePaginate();
+        return response()->json($comment);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

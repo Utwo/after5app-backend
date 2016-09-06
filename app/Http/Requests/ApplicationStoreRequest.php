@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Application;
-use App\Http\Requests\Request;
 use App\Position;
 
 class ApplicationStoreRequest extends Request
@@ -34,8 +33,7 @@ class ApplicationStoreRequest extends Request
         return [
             'message' => 'required|string',
             'answers' => 'sometimes|required',
-            'answers.*.question' => 'required_with:answers|string',
-            'answers.*.text' => 'required_with:answers|string',
+            'answers.*' => 'required_with:answers|string',
             'position_id' => 'required|integer|exists:positions,id'
         ];
     }

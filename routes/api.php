@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
 
     Route::get('project', ['uses' => 'ProjectController@index']);
+    Route::get('project/{project}/comment', ['uses' => 'CommentController@index']);
     Route::get('skill', ['uses' => 'SkillController@index']);
     Route::get('user/{username?}', ['uses' => 'UserController@index']);
 
@@ -29,14 +30,15 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
         Route::put('position/{position}', ['uses' => 'PositionController@update']);
         Route::delete('position/{position}', ['uses' => 'PositionController@destroy']);
 
-        //Route::get('application', ['uses' => 'ApplicationController@index']);
-        Route::post('application', ['uses' => 'ApplicationController@store']);
-        Route::delete('application/{application}', ['uses' => 'ApplicationController@destroy']);
-
-        Route::post('skill', ['uses' => 'SkillController@store']);
-
         Route::post('comment', ['uses' => 'CommentController@store']);
         Route::delete('comment/{comment}', ['uses' => 'CommentController@destroy']);
+
+        Route::get('position/{position}/application', ['uses' => 'ApplicationController@index_position']);
+        //TODO ar trebui schimbat application/user in user/application dar ii conflict cu user/{?username}
+        Route::get('application/user', ['uses' => 'ApplicationController@index_user']);
+        Route::post('application', ['uses' => 'ApplicationController@store']);
+        Route::put('application/{application}', ['uses' => 'ApplicationController@update']);
+        Route::delete('application/{application}', ['uses' => 'ApplicationController@destroy']);
 
         Route::put('user', ['uses' => 'UserController@update']);
     });

@@ -17,6 +17,8 @@ class User extends Authenticatable
         'name', 'email', 'website', 'workplace', 'twitter',
     ];
 
+    protected $withable = ['skill', 'project', 'favorite'];
+
     /**
      * The accessors to append to the model's array form.
      *
@@ -34,7 +36,7 @@ class User extends Authenticatable
         if ($this->facebook_id != null) {
             return "http://graph.facebook.com/{$this->facebook_id}/picture?type=square";
         }
-        return 'http://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email)));
+        return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 
     /**

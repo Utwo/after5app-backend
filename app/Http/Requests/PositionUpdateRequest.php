@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Position;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class PositionUpdateRequest extends FormRequest
+class PositionUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

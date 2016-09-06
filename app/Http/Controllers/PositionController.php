@@ -18,10 +18,14 @@ class PositionController extends Controller
      */
     public function store(Requests\PositionStoreRequest $request)
     {
-        $skill = Skill::firstOrCreate(['name' => $request->position_name]);
+        $skill = Skill::firstOrCreate(['name' => Skill::generate_name($request->position_name)]);
+        $check_unique = Position::where('project_id', $request->project_id)->where('skill_id', $skill->id)->exists();
+        if($check_unique){
+            return abort(400, 'A position with that position name already exist.');
+        }
         $position = new Position($request->all());
-        $position->project_id = $request->project_id;
         $position->skill_id = $skill->id;
+        $position->project_id = $request->project_id;
         $position->save();
         return response()->json(['position' => $position]);
     }

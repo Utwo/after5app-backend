@@ -24,4 +24,9 @@ class Position extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function Skill()
+    {
+        return $this->belongsTo(Skill::class);
+    }
 }

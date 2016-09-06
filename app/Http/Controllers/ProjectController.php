@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::simplePaginate();
+        $project = Project::pimp()->simplePaginate();
         return response()->json($project);
     }
 

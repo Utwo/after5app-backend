@@ -20,6 +20,7 @@ class CreateApplicationsTable extends Migration
             $table->text('answers');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('position_id');
+            $table->boolean('accepted')->default(0);
 
             $table->timestamp('created_at');
 
