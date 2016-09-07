@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->delete();
 
-        $my_user = User::create(['name' => 'mihai', 'email' => 'user1@example.com', 'password' => bcrypt(123456)]);
+        $my_user = User::create(['name' => 'mihai', 'email' => 'user1@example.com']);
 
         $users = factory(App\User::class, 10)->create();
         //users[] = $my_user;

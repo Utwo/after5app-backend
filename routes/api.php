@@ -18,7 +18,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::get('project', ['uses' => 'ProjectController@index']);
     Route::get('project/{project}/comment', ['uses' => 'CommentController@index']);
     Route::get('skill', ['uses' => 'SkillController@index']);
-    Route::get('user/{username?}', ['uses' => 'UserController@index']);
+    Route::get('user/{user?}', ['uses' => 'UserController@index'])->middleware(['jwt.optional']);
 
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::post('project', ['uses' => 'ProjectController@store']);

@@ -14,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'website', 'workplace', 'twitter',
+        'name', 'website', 'workplace', 'twitter',
     ];
 
     protected $withable = ['skill', 'project', 'favorite'];
@@ -33,8 +33,11 @@ class User extends Authenticatable
      */
     public function getPictureAttribute()
     {
-        if ($this->facebook_id != null) {
-            return "http://graph.facebook.com/{$this->facebook_id}/picture?type=square";
+        if($this->github_id){
+            return "https://avatars.githubusercontent.com/u/{$this->github_id}?v=3";
+        }
+        if ($this->facebook_id) {
+            return "http://graph.facebook.com/{$this->facebook_id}/picture";
         }
         return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
@@ -45,7 +48,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'facebook_token', 'github_token'
     ];
 
     public function Skill()

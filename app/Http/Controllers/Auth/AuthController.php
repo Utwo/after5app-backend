@@ -18,14 +18,16 @@ class AuthController extends Controller
     {
         $this->validate($request, ['email' => 'required|email|max:255']);
         $email = $request->email;
-        User::firstOrCreate(['email' => $email]);
-        $emailLogin = EmailLogin::createForEmail($email);
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            $user = new User();
+            $user->email = $email;
+            $user->name = strstr($email, '@', true);;
+            $user->save();
+        }
 
-        Mail::queue('emails.email-login', ['token' => $emailLogin->token], function ($m) use ($email) {
-            $m->from('noreply@myapp.com', config('app.app_name'));
-            $m->to($email)->subject(config('app.app_name') . ' Login');
-        });
-
+        $email_login = EmailLogin::createForEmail($email);
+        Mail::to($user)->queue(new \App\Mail\EmailLogin($email_login->token));
         return response()->json(['message' => 'Email successfuly send']);
     }
 
@@ -42,10 +44,10 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider($provider)
+    /*public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();
-    }
+    }*/
 
     /**
      * Obtain the user information from GitHub.
@@ -57,12 +59,12 @@ class AuthController extends Controller
         try {
             $user = Socialite::driver($provider)->user();
         } catch (Exception $e) {
-            return response()->redirectTo("auth/{$provider}");
+            return abort(500, $e->getMessage());
         }
 
         $authUser = $this->findOrCreateUser($provider, $user);
         $token = JWTAuth::fromUser($authUser);
-        return response()->redirectToRoute('home', ['token' => $token]);
+        return response()->json(['user' => $authUser, 'token' => $token]);
     }
 
     /**
@@ -73,9 +75,16 @@ class AuthController extends Controller
      */
     private function findOrCreateUser($provider, $user)
     {
-        $authUser = User::where([$provider . '_id' => $user->id])->orWhere(['email' => $user->getEmail()])->first();
-        $authUser->facebook_id = $user->getId();
-        $authUser->facebook_token = $user->token;
+        $authUser = User::where($provider . '_id', $user->id)->orWhere('email', $user->getEmail())->first();
+        if ($authUser == null) {
+            $authUser = new User();
+        }
+
+        $provider_id = $provider . '_id';
+        $provider_token = $provider . '_token';
+
+        $authUser->$provider_id = $user->getId();
+        $authUser->$provider_token = $user->token;
         $authUser->name = $user->getName();
         $authUser->email = $user->getEmail();
         $authUser->save();

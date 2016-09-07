@@ -23,7 +23,7 @@ class EmailLogin extends Model
     public static function validFromToken($token)
     {
         return self::where('token', $token)
-            ->where('created_at', '>', Carbon::parse('-10 minutes'))
+            ->where('created_at', '>', Carbon::parse('-15 minutes'))
             ->firstOrFail();
     }
 

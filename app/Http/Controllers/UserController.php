@@ -15,13 +15,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($user = null)
     {
-        if (auth()->check() && !$request->has('username')) {
-            $user = User::pimp()->findOrFail(auth()->user()->id);
+        if (auth()->check() && !$user) {
+            $user_id = auth()->user()->id;
         } else {
-            $user = User::pimp()->where('name', $request->username)->firstOrFail();
+            $user_id = $user;
         }
+        $user = User::pimp()->findOrFail($user_id);
         return response()->json($user);
     }
 
