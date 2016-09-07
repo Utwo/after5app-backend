@@ -49,18 +49,7 @@ class Handler extends ExceptionHandler
         } else if ($exception instanceof Tymon\JWTAuth\Exceptions\TokenInvalidException) {
             return response()->json(['token_invalid'], $exception->getStatusCode());
         }
-        //return parent::render($request, $exception);
-        if (env('APP_DEBUG')) {
-            $status = 400;
-
-            // If this exception is an instance of HttpException
-            if ($this->isHttpException($exception)) {
-                // Grab the HTTP status code from the Exception
-                $status = $exception->getStatusCode();
-            }
-            return response()->json(['error' => $exception->getMessage()], $status);
-        }
-        return response()->json(['error' => 'Whoops, looks like something went wrong'], 400);
+        return parent::render($request, $exception);
     }
 
     /**

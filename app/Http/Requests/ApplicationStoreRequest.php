@@ -31,9 +31,9 @@ class ApplicationStoreRequest extends Request
     public function rules()
     {
         return [
-            'message' => 'required|string',
-            'answers' => 'sometimes|required',
-            'answers.*' => 'required_with:answers|string',
+            'message' => 'sometimes|required|string',
+            'answers' => 'sometimes|json_valid|array',
+            'answers.*' => 'required_with:answers|string|min:1|max:500',
             'position_id' => 'required|integer|exists:positions,id'
         ];
     }

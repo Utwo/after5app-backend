@@ -21,6 +21,7 @@ class Project extends Model
 
     protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'user'];
 
+
     public function User()
     {
         return $this->belongsTo(User::class);

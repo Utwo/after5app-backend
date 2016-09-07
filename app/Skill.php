@@ -26,7 +26,9 @@ class Skill extends Model
 
     public static function generate_name($value)
     {
-        return str_slug(strtolower($value), '-');
+        //TODO sa pun sau sa nu pun str_slug?
+        //return str_slug(strtolower($value), '-');
+        return strtolower($value);
     }
 
     /**
@@ -37,7 +39,8 @@ class Skill extends Model
      */
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = str_slug(strtolower($value), '-');
+        //$this->attributes['name'] = str_slug(strtolower($value), '-');
+        $this->attributes['name'] = strtolower($value);
     }
 
     public function User()

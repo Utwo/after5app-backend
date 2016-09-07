@@ -24,8 +24,8 @@ class ProjectStoreRequest extends Request
         return [
             'title' => 'required|string|min:4',
             'description' => 'required|string|min:4',
-            'application_questions' => 'sometimes|required',
-            'application_questions.*' => 'required_with:application_questions|string',
+            'application_questions' => 'sometimes|json_valid|array',
+            'application_questions.*' => 'required_with:application_questions|string|min:2|max:250',
             'status' => 'sometimes|required|boolean'
         ];
     }

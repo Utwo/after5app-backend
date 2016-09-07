@@ -22,9 +22,11 @@ class UserUpdateRequest extends Request
     public function rules()
     {
         return [
-            'workplace' => 'sometimes|required|string|min:3',
-            'twitter' => 'sometimes|required|string|min:3',
-            'website' => 'sometimes|required|url',
+            'workplace' => 'sometimes|present|string|min:3',
+            'twitter' => 'sometimes|present|string|min:3',
+            'website' => 'sometimes|present|url',
+            'skill' => 'sometimes|json_valid|array',
+            'skill.*' => 'required_with:skill|string|min:1|max:15'
         ];
     }
 }
