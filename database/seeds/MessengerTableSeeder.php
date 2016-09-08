@@ -20,10 +20,12 @@ class MessengerTableSeeder extends Seeder
             $users = \App\User::whereHas('Application.Position', function ($query) use ($project) {
                 return $query->where('project_id', $project->id);
             })->get();
-            $users[] = $project->User;
+            $users = $users->merge($project->User()->get());
+
             for ($i = 0; $i <= random_int(0, 100); $i++) {
-                $project->Messenger()->create([
-                    'message' => json_decode('{"text": "' . $faker->sentence() . '", "user_id": "' . $users->random(1)->id . '", "user_name": "' . $users->random(1)->name . '"}'),
+                \Illuminate\Support\Facades\DB::table('messengers')->insert([
+                    'message' => '{"text": "' . $faker->sentence() . '", "user_id": "' . $users->random(1)->id . '", "user_name": "' . $users->random(1)->name . '"}',
+                    'project_id' => $project->id
                 ]);
             }
         }

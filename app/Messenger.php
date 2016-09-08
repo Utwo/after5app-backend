@@ -15,7 +15,7 @@ class Messenger extends Model
      */
     protected $fillable = ['message'];
 
-    protected $primaryKey = '';
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
@@ -27,6 +27,11 @@ class Messenger extends Model
 
     public function setUpdatedAtAttribute($value){}
     public function getUpdaedAt(){ return; }
+
+    public function setMessageAttribute($value)
+    {
+        $this->attributes['message'] = json_encode(['user_id' => auth()->user()->id, 'user_name' => auth()->user()->name, 'text' => $value]);
+    }
 
     public function Project()
     {
