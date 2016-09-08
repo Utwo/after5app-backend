@@ -21,6 +21,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
     Route::get('user/{user?}', ['uses' => 'UserController@index'])->middleware(['jwt.optional']);
 
     Route::group(['middleware' => ['jwt.auth']], function () {
+        Route::get('project/{project}/messenger', ['uses' => 'MessengerController@index']);
+        Route::post('messenger', ['uses' => 'MessengerController@store']);
+
         Route::post('project', ['uses' => 'ProjectController@store']);
         Route::post('project/{project}/favorite', ['uses' => 'ProjectController@favorite']);
         Route::put('project/{project}', ['uses' => 'ProjectController@update']);
