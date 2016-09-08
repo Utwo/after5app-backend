@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CommentTableSeeder::class);
         $this->call(ApplicationTableSeeder::class);
         $this->call(FavoriteTableSeeder::class);
+        $this->call(MessengerTableSeeder::class);
     }
 }

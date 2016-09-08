@@ -31,11 +31,6 @@ class Project extends Model
         return $this->belongsToMany(User::class, 'favorites');
     }
 
-    public function Application()
-    {
-        return $this->hasMany(Application::class);
-    }
-
     public function Comment()
     {
         return $this->hasMany(Comment::class);
@@ -44,5 +39,10 @@ class Project extends Model
     public function Position()
     {
         return $this->hasMany(Position::class);
+    }
+
+    public function Messenger()
+    {
+        return $this->hasMany(Messenger::class);
     }
 }

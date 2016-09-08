@@ -24,7 +24,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
     $array = [];
-    for($i=0;$i<=random_int(1, 6);$i++){
+    for ($i = 0; $i <= random_int(1, 6); $i++) {
         $array[] = $faker->sentence();
     }
     return [
