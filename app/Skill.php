@@ -3,11 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Jedrzej\Pimpable\PimpableTrait;
 
 class Skill extends Model
 {
-    use PimpableTrait;
+    use ModelTrait;
     /**
      * The attributes that are mass assignable.
      *

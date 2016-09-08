@@ -6,6 +6,7 @@ use App\Project;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -14,9 +15,19 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $project = Project::pimp()->simplePaginate();
+        if ($request->exists('popular')) {
+            $project = Project::withCount('Favorite')->pimp()->orderBy('favorite_count', 'desc')->orderBy('created_at', 'desc')->simplePaginate();
+        }else if($request->exists('recommended') && auth()->check()){
+            $user_skill = auth()->user()->Skill->pluck(['id']);
+            $project = Project::pimp()->whereHas('Position', function($query) use ($user_skill){
+                return $query->whereIn('skill_id', $user_skill);
+            })->orderBy('created_at', 'desc')->simplePaginate();
+        }else{
+            $project = Project::pimp()->simplePaginate();
+        }
+
         return response()->json($project);
     }
 
@@ -35,7 +46,8 @@ class ProjectController extends Controller
         return response()->json(['project' => $project]);
     }
 
-    public function favorite(Request $request){
+    public function favorite(Request $request)
+    {
         $project = Project::findOrFail($request->project);
         $result = $project->favorite()->toggle(auth()->user());
         return response()->json($result);

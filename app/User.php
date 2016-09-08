@@ -3,11 +3,10 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Jedrzej\Pimpable\PimpableTrait;
 
 class User extends Authenticatable
 {
-    use PimpableTrait;
+    use ModelTrait;
     /**
      * The attributes that are mass assignable.
      *
