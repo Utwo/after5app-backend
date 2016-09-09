@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Notifications\AddCommentNotification;
+use App\Project;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -33,6 +35,11 @@ class CommentController extends Controller
         $comment->user_id = auth()->user()->id;
         $comment->project_id = $request->project_id;
         $comment->save();
+
+        $project = $comment->Project;
+        $project->User->notify(new AddCommentNotification($project));
+        unset($comment['Project']);
+
         return response()->json(['comment' => $comment]);
     }
 

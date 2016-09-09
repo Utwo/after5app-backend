@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Notifications\AcceptApplicationNotification;
+use App\Notifications\AddApplicationNotification;
 use App\Position;
 use Illuminate\Http\Request;
 
@@ -46,6 +48,11 @@ class ApplicationController extends Controller
         $application->user_id = auth()->user()->id;
         $application->position_id = $request->position_id;
         $application->save();
+
+        $project = $application->Position->Project;
+        $project->User->notify(new AddApplicationNotification(auth()->user(), $project));
+        unset($application['Position']);
+
         return response()->json(['application' => $application]);
     }
 
@@ -59,10 +66,15 @@ class ApplicationController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, ['accepted' => 'required|boolean']);
+
         $application = Application::findOrFail($id);
         $project = $application->Position->Project;
         $this->authorize('user_own_project', $project);
         $application->update(['accepted' => $request->accepted]);
+
+        $application->User->notify(new AcceptApplicationNotification($project));
+        unset($application['User'], $application['Position']);
+
         return response()->json(['application' => $application]);
     }
 

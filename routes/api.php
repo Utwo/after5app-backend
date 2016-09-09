@@ -24,6 +24,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
         Route::get('project/{project}/messenger', ['uses' => 'MessengerController@index']);
         Route::post('messenger', ['uses' => 'MessengerController@store']);
 
+        Route::get('notification/count', ['uses' => 'NotificationController@notification_count']);
+        Route::get('notification', ['uses' => 'NotificationController@index']);
+
         Route::post('project', ['uses' => 'ProjectController@store']);
         Route::post('project/{project}/favorite', ['uses' => 'ProjectController@favorite']);
         Route::put('project/{project}', ['uses' => 'ProjectController@update']);
