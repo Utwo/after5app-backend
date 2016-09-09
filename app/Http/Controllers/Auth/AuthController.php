@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\EmailLogin;
+use App\Notifications\EmailLoginNotification;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +28,8 @@ class AuthController extends Controller
         }
 
         $email_login = EmailLogin::createForEmail($email);
-        Mail::to($user)->queue(new \App\Mail\EmailLogin($email_login->token));
+        $user->notify(new EmailLoginNotification($email_login->token));
+
         return response()->json(['message' => 'Email successfuly send']);
     }
 
