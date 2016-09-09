@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-
 /*
 |--------------------------------------------------------------------------
 | Console Routes
@@ -13,6 +11,14 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->describe('Display an inspiring quote');
+Artisan::command('auth:clear-email', function () {
+    $weeks = 1;
+    $deleted_count = DB::table('email_logins')->where('created_at', '<', \Carbon\Carbon::now()->subWeek($weeks))->delete();
+    $this->info("{$deleted_count} emails tokens older then {$weeks} weeks flushed successfully.");
+})->describe('Flush expired email token login');
+
+Artisan::command('notification:flush', function () {
+    $weeks = 4;
+    $deleted_count = DB::table('notifications')->where('created_at', '<', \Carbon\Carbon::now()->subWeek($weeks))->whereNotNull('read_at')->delete();
+    $this->info("{$deleted_count} notifications older then {$weeks} weeks flushed successfully.");
+})->describe('Flush old notifications');

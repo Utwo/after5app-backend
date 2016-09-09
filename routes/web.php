@@ -20,9 +20,4 @@ Route::post('auth/email-authenticate/{token}', ['as' => 'auth.email.post', 'uses
 
 Route::post('auth/{provider}/callback', ['as' => 'facebook.callback', 'uses' => 'Auth\AuthController@handleProviderCallback'])->where('provider', 'facebook|github');
 
-Route::post('token/{user}', function ($id) {
-    $user = App\User::findOrFail($id);
-
-    $token = JWTAuth::fromUser($user);
-    return response()->json(['user' => $user,'jwt-token' => $token]);
-});
+Route::post('token/{user}', ['uses' => 'HomeController@must_delete']);
