@@ -15,7 +15,7 @@ class CreateMessengersTable extends Migration
     {
         Schema::create('messengers', function (Blueprint $table) {
 
-            $table->json('message');
+            $table->text('message');
             $table->unsignedInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
