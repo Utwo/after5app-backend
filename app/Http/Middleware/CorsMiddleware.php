@@ -15,8 +15,17 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request)->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
-            ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
+        $headers = [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, Accept, Authorization, X-Requested-With, Origin'
+        ];
+
+        if($request->getMethod() == "OPTIONS") {
+            // The client-side application can set only headers allowed in Access-Control-Allow-Headers
+            return response('OK', 200, $headers);
+        }
+
+        return $next($request)->withHeaders($headers);
     }
 }
