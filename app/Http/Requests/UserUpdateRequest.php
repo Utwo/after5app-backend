@@ -22,10 +22,10 @@ class UserUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'sometimes|required|string|min:3|max:20',
-            'workplace' => 'sometimes|present|string|min:3',
-            'twitter' => 'sometimes|present|string|min:3',
-            'website' => 'sometimes|present|url',
+            'name' => 'sometimes|present|nullable|string|min:3|max:20',
+            'workplace' => 'sometimes|present|nullable|string|min:3',
+            'twitter' => 'sometimes|present|nullable|string|min:3',
+            'website' => 'sometimes|present|nullable|url',
             'skill' => 'sometimes|json_valid|array',
             'skill.*' => 'required_with:skill|string|min:1|max:15'
         ];

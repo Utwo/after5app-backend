@@ -17,15 +17,13 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->exists('popular')) {
-            $project = Project::withCount('Favorite')->pimp()->orderBy('favorite_count', 'desc')->orderBy('created_at', 'desc')->simplePaginate();
-        }else if($request->exists('recommended') && auth()->check()){
+        if($request->exists('recommended') && auth()->check()){
             $user_skill = auth()->user()->Skill->pluck(['id']);
-            $project = Project::pimp()->whereHas('Position', function($query) use ($user_skill){
+            $project = Project::withCount('Favorite', 'Comment')->pimp()->whereHas('Position', function($query) use ($user_skill){
                 return $query->whereIn('skill_id', $user_skill);
             })->orderBy('created_at', 'desc')->simplePaginate();
         }else{
-            $project = Project::pimp()->simplePaginate();
+            $project = Project::withCount('Favorite', 'Comment')->pimp()->simplePaginate();
         }
 
         return response()->json($project);

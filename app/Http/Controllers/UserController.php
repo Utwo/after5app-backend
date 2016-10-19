@@ -36,12 +36,15 @@ class UserController extends Controller
     public function update(Requests\UserUpdateRequest $request)
     {
         $user = auth()->user();
-        $skills = [];
-        foreach ($request->skill as $request_skill) {
-            $skills[] = Skill::firstOrCreate(['name' => Skill::generate_name($request_skill)])->id;
+        
+        if($request->has('skill')){
+            $skills = [];
+            foreach ($request->skill as $request_skill) {
+                $skills[] = Skill::firstOrCreate(['name' => Skill::generate_name($request_skill)])->id;
+            }
+            $user->skill()->sync($skills);
         }
 
-        $user->skill()->sync($skills);
         $user->update($request->all());
         return response()->json(['user' => $user]);
     }

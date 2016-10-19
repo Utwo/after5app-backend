@@ -28,8 +28,8 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         $array[] = $faker->sentence();
     }
     return [
-        'title' => $faker->text(rand(10, 15)),
-        'description' => $faker->sentence,
+        'title' => substr($faker->text(rand(10, 35)), 0, -1),
+        'description' => $faker->paragraph(rand(3, 6)),
         'application_questions' => $array,
         'status' => $faker->boolean(),
         'user_id' => \App\User::all()->random(1)->id

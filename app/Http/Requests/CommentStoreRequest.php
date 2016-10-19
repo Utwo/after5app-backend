@@ -22,7 +22,7 @@ class CommentStoreRequest extends Request
     public function rules()
     {
         return [
-            'text' => 'required|string|min:3',
+            'text' => 'required|string|min:2',
             'project_id' => 'required|integer|exists:projects,id'
         ];
     }

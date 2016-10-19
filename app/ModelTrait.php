@@ -8,5 +8,5 @@ trait ModelTrait
 {
     use PimpableTrait;
 
-    public $notSearchable = ['page', 'recommended', 'popular', 'sort', 'authorization'];
+    public $notSearchable = ['page', 'recommended', 'popular', 'sort', 'token'];
 }

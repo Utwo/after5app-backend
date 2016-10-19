@@ -13,6 +13,10 @@ class Position extends Model
      */
     protected $fillable = ['description', 'status'];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *
