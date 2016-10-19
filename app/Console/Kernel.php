@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('auth:clear-email --force -q')->weekly()->appendOutputTo(storage_path('/logs/auth-clear-email.log'));;
-        $schedule->command('notification:flush --force -q')->weekly()->appendOutputTo(storage_path('logs/notification-flush.log'));;
+        $schedule->command('auth:clear-email')->weekly()->appendOutputTo(storage_path('/logs/auth-clear-email.log'));;
+        $schedule->command('notification:flush')->weekly()->appendOutputTo(storage_path('logs/notification-flush.log'));;
     }
 
     /**
