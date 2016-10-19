@@ -12,15 +12,17 @@ class AddCommentNotification extends Notification implements ShouldQueue
     use Queueable;
 
     private $project;
+    private $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($project)
+    public function __construct($project, $user)
     {
         $this->project = $project;
+        $this->user = $user;
     }
 
     /**
@@ -57,8 +59,8 @@ class AddCommentNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'project_id' => $this->project->id,
-            'project_title' => $this->project->title
+            'project' => $this->project,
+            'user' => $this->user
         ];
     }
 }

@@ -58,10 +58,8 @@ class AddApplicationNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'project_id' => $this->project->id,
-            'project_title' => $this->project->title,
-            'user_id' => $this->user->id,
-            'user_name' => $this->user->name
+            'project' => $this->project,
+            'user' => $this->user
         ];
     }
 }
