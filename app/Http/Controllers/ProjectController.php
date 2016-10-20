@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Position;
 use App\Project;
+use App\Skill;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -41,7 +43,26 @@ class ProjectController extends Controller
         $project = new Project($request->all());
         $project->user_id = auth()->user()->id;
         $project->save();
+        $position_created = [];
+        foreach ($request->position as $position){
+            $position_created[] = $this->store_position($position, $project);
+        }
+        $project->position = $position_created;
         return response()->json(['project' => $project]);
+    }
+
+    public function store_position($position_request, $project)
+    {
+        $skill = Skill::firstOrCreate(['name' => Skill::generate_name($position_request['name'])]);
+        $check_unique = Position::where('project_id', $project->id)->where('skill_id', $skill->id)->exists();
+        if($check_unique){
+            return abort(400, 'A position with that position name already exist.');
+        }
+        $position = new Position($position_request);
+        $position->skill_id = $skill->id;
+        $position->project_id = $project->id;
+        $position->save();
+        return $position;
     }
 
     public function favorite(Request $request)

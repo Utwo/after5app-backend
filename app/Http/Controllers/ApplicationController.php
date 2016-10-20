@@ -6,6 +6,7 @@ use App\Application;
 use App\Notifications\AcceptApplicationNotification;
 use App\Notifications\AddApplicationNotification;
 use App\Position;
+use App\Project;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,11 +18,13 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_position(Request $request)
+    public function index_project(Request $request)
     {
-        $project = Position::findOrFail($request->position)->Project;
+        $project = Project::findOrFail($request->project);
         $this->authorize('user_own_project', $project);
-        $application = Application::pimp()->where('position_id', $request->position)->simplePaginate();
+        $application = Application::pimp()->whereHas('Position.Project', function($query) use ($project){
+            return $query->where('id', $project->id);
+        })->get();
         return response()->json($application);
     }
 

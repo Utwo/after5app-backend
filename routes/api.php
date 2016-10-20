@@ -39,7 +39,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
         Route::post('comment', ['uses' => 'CommentController@store']);
         Route::delete('comment/{comment}', ['uses' => 'CommentController@destroy']);
 
-        Route::get('position/{position}/application', ['uses' => 'ApplicationController@index_position']);
+        Route::get('project/{project}/application', ['uses' => 'ApplicationController@index_project']);
         //TODO ar trebui schimbat application/user in user/application dar ii conflict cu user/{?username}
         Route::get('application/user', ['uses' => 'ApplicationController@index_user']);
         Route::post('application', ['uses' => 'ApplicationController@store']);
