@@ -37,7 +37,9 @@ class CommentController extends Controller
         $comment->save();
 
         $project = $comment->Project;
-        $project->User->notify(new AddCommentNotification($project, auth()->user()));
+        if(auth()->user()->id != $project->user_id) {
+            $project->User->notify(new AddCommentNotification($project, auth()->user()));
+        }
         unset($comment['Project']);
 
         return response()->json(['comment' => $comment]);

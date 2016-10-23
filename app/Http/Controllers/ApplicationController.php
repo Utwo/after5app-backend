@@ -73,7 +73,8 @@ class ApplicationController extends Controller
         $application = Application::findOrFail($id);
         $project = $application->Position->Project;
         $this->authorize('user_own_project', $project);
-        $application->update(['accepted' => $request->accepted]);
+        $application->accepted = $request->accepted;
+        $application->save();
 
         $application->User->notify(new AcceptApplicationNotification($project));
         unset($application['User'], $application['Position']);
