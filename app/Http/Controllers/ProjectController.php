@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Position;
 use App\Project;
 use App\Skill;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,16 +20,35 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->exists('recommended') && auth()->check()){
+        if ($request->exists('recommended') && auth()->check()) {
             $user_skill = auth()->user()->Skill->pluck(['id']);
-            $project = Project::withCount('Favorite', 'Comment')->pimp()->whereHas('Position', function($query) use ($user_skill){
+            $project = Project::withCount('Favorite', 'Comment')->pimp()->whereHas('Position', function ($query) use ($user_skill) {
                 return $query->whereIn('skill_id', $user_skill);
             })->orderBy('created_at', 'desc')->simplePaginate();
-        }else{
+        } else {
             $project = Project::withCount('Favorite', 'Comment')->pimp()->simplePaginate();
         }
 
         return response()->json($project);
+    }
+
+    /**
+     * Display a listing of the members of a project.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function members(Request $request)
+    {
+        $position = Position::where('project_id', $request->project)->has('Application')->with(['Application' => function($query){
+            return $query->where('accepted', true)->with('User');
+        }])->get();
+        $members = collect($position->toArray())->pluck('application.*.user')->collapse();
+        /*$user = User::whereHas('Application', function($query) use ($request){
+            return $query->where('accepted', true)->whereHas('Position', function($query) use ($request){
+               return $query->where('project_id', $request->project);
+            });
+        })->get();*/
+        return response()->json($members);
     }
 
     /**
@@ -44,7 +64,7 @@ class ProjectController extends Controller
         $project->user_id = auth()->user()->id;
         $project->save();
         $position_created = [];
-        foreach ($request->position as $position){
+        foreach ($request->position as $position) {
             $position_created[] = $this->store_position($position, $project);
         }
         $project->position = $position_created;
@@ -55,7 +75,7 @@ class ProjectController extends Controller
     {
         $skill = Skill::firstOrCreate(['name' => Skill::generate_name($position_request['name'])]);
         $check_unique = Position::where('project_id', $project->id)->where('skill_id', $skill->id)->exists();
-        if($check_unique){
+        if ($check_unique) {
             return abort(400, 'A position with that position name already exist.');
         }
         $position = new Position($position_request);
