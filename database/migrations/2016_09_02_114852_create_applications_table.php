@@ -22,7 +22,7 @@ class CreateApplicationsTable extends Migration
             $table->unsignedInteger('position_id');
             $table->boolean('accepted')->default(0);
 
-            $table->timestamp('created_at');
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
