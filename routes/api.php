@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1', 'middleware' => ['api']], function () {
 
     Route::get('project', ['uses' => 'ProjectController@index'])->middleware(['jwt.optional']);
-    Route::get('project/{project}/comment', ['uses' => 'CommentController@index']);
+    //Route::get('project/{project}/comment', ['uses' => 'CommentController@index']);
     Route::get('project/{project}/members', ['uses' => 'ProjectController@members']);
     Route::get('skill', ['uses' => 'SkillController@index']);
     Route::get('user/{user?}', ['uses' => 'UserController@index'])->middleware(['jwt.optional']);

@@ -25,8 +25,8 @@ class Messenger extends Model
 
     protected $withable = [''];
 
-    public function setUpdatedAtAttribute($value){}
-    public function getUpdaedAt(){ return; }
+    public function setUpdatedAt($value){}
+    public function getUpdatedAtColumn(){ return; }
 
     public function setMessageAttribute($value)
     {

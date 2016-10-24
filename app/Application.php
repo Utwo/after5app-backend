@@ -21,8 +21,8 @@ class Application extends Model
 
     protected $withable = ['user', 'position', 'position.project', 'position.skill'];
 
-    public function setUpdatedAtAttribute($value){}
-    public function getUpdaedAt(){ return; }
+    public function setUpdatedAt($value){}
+    public function getUpdatedAtColumn(){ return; }
 
     public function User(){
         return $this->belongsTo(User::class);

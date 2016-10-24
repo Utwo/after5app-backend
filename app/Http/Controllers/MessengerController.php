@@ -19,7 +19,7 @@ class MessengerController extends Controller
     {
         $project = Project::findOrFail($project_id);
         $this->authorize('user_contribute_to_project', $project);
-        $messenger = Messenger::pimp()->where('project_id', $project->id)->orderBy('created_at', 'desc')->simplePaginate();
+        $messenger = Messenger::pimp()->where('project_id', $project->id)->orderBy('created_at', 'desc')->simplePaginate(config('app.per_page'));
         return response()->json(['messenger' => $messenger]);
     }
 

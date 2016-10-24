@@ -24,9 +24,9 @@ class ProjectController extends Controller
             $user_skill = auth()->user()->Skill->pluck(['id']);
             $project = Project::withCount('Favorite', 'Comment')->pimp()->whereHas('Position', function ($query) use ($user_skill) {
                 return $query->whereIn('skill_id', $user_skill);
-            })->orderBy('created_at', 'desc')->simplePaginate();
+            })->orderBy('created_at', 'desc')->simplePaginate(config('app.per_page'));
         } else {
-            $project = Project::withCount('Favorite', 'Comment')->pimp()->simplePaginate();
+            $project = Project::withCount('Favorite', 'Comment')->pimp()->simplePaginate(config('app.per_page'));
         }
 
         return response()->json($project);

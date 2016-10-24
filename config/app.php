@@ -124,6 +124,9 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    // Number of items per page
+    'per_page' => 10,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -17,11 +17,11 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    /*public function index(Request $request)
     {
-        $comment = Comment::pimp()->where('project_id', $request->project)->simplePaginate();
+        $comment = Comment::pimp()->where('project_id', $request->project)->simplePaginate(config('app.per_page'));
         return response()->json($comment);
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
@@ -37,7 +37,7 @@ class CommentController extends Controller
         $comment->save();
 
         $project = $comment->Project;
-        if(auth()->user()->id != $project->user_id) {
+        if (auth()->user()->id != $project->user_id) {
             $project->User->notify(new AddCommentNotification($project, auth()->user()));
         }
         unset($comment['Project']);

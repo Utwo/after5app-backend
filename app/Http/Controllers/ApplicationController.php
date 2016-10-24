@@ -35,7 +35,7 @@ class ApplicationController extends Controller
      */
     public function index_user()
     {
-        $application = Application::pimp()->where('user_id', auth()->user()->id)->simplePaginate();
+        $application = Application::pimp()->where('user_id', auth()->user()->id)->get();
         return response()->json($application);
     }
 

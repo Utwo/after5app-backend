@@ -14,8 +14,8 @@ class Comment extends Model
      */
     protected $fillable = ['text'];
 
-    public function setUpdatedAtAttribute($value){}
-    public function getUpdaedAt(){ return; }
+    public function setUpdatedAt($value){}
+    public function getUpdatedAtColumn(){ return; }
 
     protected $withable = ['user'];
 
