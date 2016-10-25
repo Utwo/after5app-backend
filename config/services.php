@@ -42,7 +42,7 @@ return [
     ],
 
     'github' => [
-        'client_id' => env('GITHUB_ID', '4b122575498973d10891'),
+        'client_id' => env('GITHUB_ID', 'fe2cc437add1417665e4'),
         'client_secret' => env('GITHUB_SECRET'),
         'redirect' => env('APP_URL', 'http://localhost').'/auth/github/callback'
     ]

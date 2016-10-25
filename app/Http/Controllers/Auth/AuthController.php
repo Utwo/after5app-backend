@@ -42,16 +42,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Redirect the user to the Facebook authentication page.
-     *
-     * @return Response
-     */
-    /*public function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }*/
-
-    /**
      * Obtain the user information from GitHub.
      *
      * @return Response
@@ -59,7 +49,7 @@ class AuthController extends Controller
     public function handleProviderCallback($provider)
     {
         try {
-            $user = Socialite::driver($provider)->user();
+            $user = Socialite::driver($provider)->stateless()->user();
         } catch (Exception $e) {
             return abort(500, $e->getMessage());
         }
