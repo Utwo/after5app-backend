@@ -34,7 +34,7 @@ class User extends Authenticatable
     public function getPictureAttribute()
     {
         if($this->github_id){
-            return "https://avatars.githubusercontent.com/u/{$this->github_id}?v=3";
+            return "https://avatars.githubusercontent.com/u/{$this->github_id}";
         }
         if ($this->facebook_id) {
             return "http://graph.facebook.com/{$this->facebook_id}/picture";

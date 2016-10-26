@@ -6,11 +6,9 @@ use App\EmailLogin;
 use App\Notifications\EmailLoginNotification;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller

@@ -11,11 +11,4 @@ class HomeController extends Controller
     {
         return view('index');
     }
-
-    public function must_delete($id){
-        $user = User::findOrFail($id);
-
-        $token = JWTAuth::fromUser($user);
-        return response()->json(['user' => $user,'jwt-token' => $token]);
-    }
 }
