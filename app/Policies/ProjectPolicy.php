@@ -36,8 +36,10 @@ class ProjectPolicy
             return true;
         }
 
-        return Position::where('project_id', $project->id)->whereHas('Application', function($query) use ($user){
+        return User::membersOfProject($project->id)->where('id', $user->id)->exists();
+
+        /*return Position::where('project_id', $project->id)->whereHas('Application', function($query) use ($user){
             return $query->where('user_id', $user->id)->where('accepted', 1);
-        })->exists();
+        })->exists();*/
     }
 }

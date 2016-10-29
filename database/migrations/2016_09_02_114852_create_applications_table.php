@@ -20,7 +20,7 @@ class CreateApplicationsTable extends Migration
             $table->text('answers');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('position_id');
-            $table->boolean('accepted')->default(0);
+            $table->unsignedTinyInteger('accepted')->default(0); // 0-pending, 1-accepted, 2-declined
 
             $table->timestamps();
 

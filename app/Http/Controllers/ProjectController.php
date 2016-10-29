@@ -39,15 +39,7 @@ class ProjectController extends Controller
      */
     public function members(Request $request)
     {
-        $position = Position::where('project_id', $request->project)->has('Application')->with(['Application' => function($query){
-            return $query->where('accepted', true)->with('User');
-        }])->get();
-        $members = collect($position->toArray())->pluck('application.*.user')->collapse();
-        /*$user = User::whereHas('Application', function($query) use ($request){
-            return $query->where('accepted', true)->whereHas('Position', function($query) use ($request){
-               return $query->where('project_id', $request->project);
-            });
-        })->get();*/
+        $members = User::membersOfProject($request->project)->get();
         return response()->json($members);
     }
 

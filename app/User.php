@@ -51,6 +51,22 @@ class User extends Authenticatable
         'password', 'remember_token', 'facebook_token', 'github_token'
     ];
 
+    /**
+     * Scope a query to only include members of a project.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $project_id
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMembersOfProject($query, $project_id)
+    {
+        return $query->whereHas('Application', function ($query) use ($project_id) {
+            $query->where('accepted', 1)->whereHas('Position', function ($query) use ($project_id) {
+                $query->where('project_id', $project_id);
+            });
+        });
+    }
+
     public function Skill()
     {
         return $this->belongsToMany(Skill::class);

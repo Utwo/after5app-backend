@@ -16,7 +16,6 @@ class Application extends Model
 
     protected $casts = [
         'answers' => 'json',
-        'accepted' => 'boolean'
     ];
 
     protected $withable = ['user', 'position', 'position.project', 'position.skill'];

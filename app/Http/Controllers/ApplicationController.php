@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Application;
 use App\Notifications\AcceptApplicationNotification;
 use App\Notifications\AddApplicationNotification;
+use App\Notifications\DeclineApplicationNotification;
 use App\Position;
 use App\Project;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class ApplicationController extends Controller
     {
         $project = Project::findOrFail($request->project);
         $this->authorize('user_own_project', $project);
-        $application = Application::pimp()->whereHas('Position.Project', function($query) use ($project){
+        $application = Application::pimp()->whereHas('Position.Project', function ($query) use ($project) {
             return $query->where('id', $project->id);
         })->get();
         return response()->json($application);
@@ -68,7 +69,7 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['accepted' => 'required|boolean']);
+        $this->validate($request, ['accepted' => 'required|integer|in:1,2']);
 
         $application = Application::findOrFail($id);
         $project = $application->Position->Project;
@@ -76,7 +77,11 @@ class ApplicationController extends Controller
         $application->accepted = $request->accepted;
         $application->save();
 
-        $application->User->notify(new AcceptApplicationNotification($project));
+        if ($application->accepted == 1) {
+            $application->User->notify(new AcceptApplicationNotification($project));
+        } else {
+            $application->User->notify(new DeclineApplicationNotification($project));
+        }
         unset($application['User'], $application['Position']);
 
         return response()->json(['application' => $application]);
