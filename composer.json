@@ -10,7 +10,8 @@
         "laravel/socialite": "^2.0",
         "jedrzej/pimpable": "^0.0.4",
         "tymon/jwt-auth": "^0.5.9",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "sentry/sentry-laravel": "^0.4.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
