@@ -72,12 +72,15 @@ class ApplicationController extends Controller
         $this->validate($request, ['accepted' => 'required|integer|in:1,2']);
 
         $application = Application::findOrFail($id);
-        $project = $application->Position->Project;
+        $position = $application->Position;
+        $project = $position->Project;
         $this->authorize('user_own_project', $project);
-        $application->accepted = $request->accepted;
+        $application->accepted = $request->accepted; //acceptam aplicatia
         $application->save();
 
         if ($application->accepted == 1) {
+            $position->status = 0; //facem positia ocupata
+            $position->save();
             $application->User->notify(new AcceptApplicationNotification($project));
         } else {
             $application->User->notify(new DeclineApplicationNotification($project));
