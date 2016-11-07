@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'login@startupper.com',
-        'name' => 'Startupper login',
+        'address' => 'login@after5app.co',
+        'name' => config('app.name') + ' login',
     ],
 
     /*
