@@ -17,10 +17,10 @@ class CreateUsersTable extends Migration
             $table->increments('id');
 
             $table->string('name')->nullable();
-            $table->string('email')->unique()->index();
+            $table->string('email', 191)->unique()->index();
             $table->unsignedBigInteger('facebook_id')->unique()->nullable();
             $table->string('facebook_token')->nullable();
-            $table->string('github_id')->unique()->nullable();
+            $table->string('github_id', 191)->unique()->nullable();
             $table->string('github_token')->nullable();
             $table->string('website')->nullable();
             $table->string('twitter')->nullable();

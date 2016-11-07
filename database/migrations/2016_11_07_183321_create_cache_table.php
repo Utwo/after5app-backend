@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmailLoginsTable extends Migration
+class CreateCacheTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateEmailLoginsTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_logins', function (Blueprint $table) {
-            $table->string('email', 191)->index();
-            $table->string('token', 191)->index();
-            $table->timestamp('created_at');
+        Schema::create('cache', function (Blueprint $table) {
+            $table->string('key', 191)->unique();
+            $table->text('value');
+            $table->integer('expiration');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateEmailLoginsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_logins');
+        Schema::dropIfExists('cache');
     }
 }
