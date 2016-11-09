@@ -43,9 +43,10 @@ class EmailLoginNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+		    ->subject(config('app.name') . ' login by email')
                     ->line("Login using this code: {$this->token}")
                     ->line("Or click the button bellow")
-                    ->action('Login', route('auth.email.index', ['code' => $this->token]))
+                    ->action('Login', config('app.url') . '/auth/email/callback?code=' . $this->token)
                     ->line('Thank you for using our application!');
     }
 

@@ -12,7 +12,6 @@
 */
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
-Route::get('auth/email-authenticate', ['as' => 'auth.email.index', 'uses' => 'HomeController@index']);
 
 Route::post('auth/login', ['uses' => 'Auth\AuthController@login']);
 Route::post('auth/email-authenticate/{token}', ['as' => 'auth.email.post', 'uses' => 'Auth\AuthController@authenticateEmail']);

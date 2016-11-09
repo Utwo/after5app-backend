@@ -73,6 +73,7 @@ class ProjectController extends Controller
         $position = new Position($position_request);
         $position->skill_id = $skill->id;
         $position->project_id = $project->id;
+        $position->status = 1;
         $position->save();
         return $position;
     }

@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => 'login@after5app.co',
-        'name' => config('app.name') + ' login',
+        'name' => config('app.name') . ' login',
     ],
 
     /*
