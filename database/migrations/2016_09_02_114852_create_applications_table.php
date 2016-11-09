@@ -20,9 +20,10 @@ class CreateApplicationsTable extends Migration
             $table->text('answers');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('position_id');
-            $table->unsignedTinyInteger('accepted')->default(0); // 0-pending, 1-accepted, 2-declined
+            $table->boolean('accepted')->default(0); // 0-pending, 1-accepted
 
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');

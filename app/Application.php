@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Application extends Model
 {
-    use ModelTrait;
+    use ModelTrait, SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +17,10 @@ class Application extends Model
 
     protected $casts = [
         'answers' => 'json',
+        'accepted' => 'boolean'
     ];
+
+    protected $dates = ['deleted_at'];
 
     protected $withable = ['user', 'position', 'position.project', 'position.skill'];
 

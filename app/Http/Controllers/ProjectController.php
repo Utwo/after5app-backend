@@ -51,31 +51,18 @@ class ProjectController extends Controller
      */
     public function store(Requests\ProjectStoreRequest $request)
     {
-        //$request->merge(['positions' => $request->positions, 'application_questions' => $request->application_questions]);
         $project = new Project($request->all());
         $project->user_id = auth()->user()->id;
         $project->save();
+
         $position_created = [];
+        $position_controller = new PositionController();
         foreach ($request->position as $position) {
-            $position_created[] = $this->store_position($position, $project);
+            $position_created[] = $position_controller->store_position($position, $project->id);
         }
         $project->position = $position_created;
-        return response()->json(['project' => $project]);
-    }
 
-    public function store_position($position_request, $project)
-    {
-        $skill = Skill::firstOrCreate(['name' => Skill::generate_name($position_request['name'])]);
-        $check_unique = Position::where('project_id', $project->id)->where('skill_id', $skill->id)->exists();
-        if ($check_unique) {
-            return abort(400, 'A position with that position name already exist.');
-        }
-        $position = new Position($position_request);
-        $position->skill_id = $skill->id;
-        $position->project_id = $project->id;
-        $position->status = 1;
-        $position->save();
-        return $position;
+        return response()->json(['project' => $project]);
     }
 
     public function favorite(Request $request)

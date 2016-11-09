@@ -69,21 +69,22 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['accepted' => 'required|integer|in:1,2']);
+        $this->validate($request, ['accepted' => 'required|boolean']);
 
         $application = Application::findOrFail($id);
         $position = $application->Position;
         $project = $position->Project;
         $this->authorize('user_own_project', $project);
-        $application->accepted = $request->accepted; //acceptam aplicatia
-        $application->save();
 
-        if ($application->accepted == 1) {
+        if ($request->accepted) {
+            $application->accepted = 1; //acceptam aplicatia
+            $application->save();
             $position->status = 0; //facem positia ocupata
             $position->save();
             $application->User->notify(new AcceptApplicationNotification($project));
         } else {
             $application->User->notify(new DeclineApplicationNotification($project));
+            $application->delete();
         }
         unset($application['User'], $application['Position']);
 
