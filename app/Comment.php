@@ -19,6 +19,11 @@ class Comment extends Model
 
     protected $withable = ['user'];
 
+    protected $casts = [
+        'project_id' => 'integer',
+        'user_id' => 'integer'
+    ];
+
     public function Project(){
         return $this->belongsTo(Project::class);
     }

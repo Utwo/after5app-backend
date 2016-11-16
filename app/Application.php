@@ -17,7 +17,9 @@ class Application extends Model
 
     protected $casts = [
         'answers' => 'json',
-        'accepted' => 'boolean'
+        'accepted' => 'boolean',
+        'user_id' => 'integer',
+        'position_id' => 'integer'
     ];
 
     protected $dates = ['deleted_at'];

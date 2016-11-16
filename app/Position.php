@@ -15,6 +15,8 @@ class Position extends Model
 
     protected $casts = [
         'status' => 'boolean',
+        'project_id' => 'integer',
+        'skill_id' => 'integer'
     ];
 
     /**

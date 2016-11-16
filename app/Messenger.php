@@ -21,6 +21,7 @@ class Messenger extends Model
 
     protected $casts = [
         'message' => 'json',
+        'project_id' => 'integer'
     ];
 
     protected $withable = [''];

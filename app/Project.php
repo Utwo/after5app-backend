@@ -17,6 +17,7 @@ class Project extends Model
     protected $casts = [
         'application_questions' => 'json',
         'status' => 'boolean',
+        'user_id' => 'integer',
     ];
 
     protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'user'];
