@@ -11,6 +11,7 @@ use App\Project;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Gate;
 
 class ApplicationController extends Controller
 {
@@ -69,25 +70,20 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['accepted' => 'required|boolean']);
-
         $application = Application::findOrFail($id);
         $position = $application->Position;
         $project = $position->Project;
         $this->authorize('user_own_project', $project);
 
-        if ($request->accepted) {
-            $application->accepted = 1; //acceptam aplicatia
-            $application->save();
-            $position->status = 0; //facem positia ocupata
-            $position->save();
-            $application->User->notify(new AcceptApplicationNotification($project));
-        } else {
-            $application->User->notify(new DeclineApplicationNotification($project));
-            $application->delete();
-        }
-        unset($application['User'], $application['Position']);
+        //cand accept aplicatie schimba statusul pozitiei ca fiind ocupata
+        $position->status = 0;
+        $position->save();
 
+        $application->accepted = 1;
+        $application->save();
+        $application->User->notify(new AcceptApplicationNotification($project));
+
+        unset($application['User'], $application['Position']);
         return response()->json(['application' => $application]);
     }
 
@@ -100,7 +96,19 @@ class ApplicationController extends Controller
     public function destroy(Request $request)
     {
         $application = Application::findOrFail($request->application);
-        $this->authorize('user_own_application', $application);
+        $position = $application->Position;
+        $project = $position->Project;
+        if (Gate::denies('user_own_application', $application) && Gate::denies('user_own_project', $project)) {
+            abort(403, 'This action is unauthorized.');
+        }
+        if ($application->accepted) {
+            //daca stergem un membru, facem statusul la positie inapoi la unu
+            $position->status = 1;
+        }
+        if (auth()->user()->id != $application->user_id) {
+            //trimitem notificare doar daca aplicatia este stearsa de altcineva decat user-ul apartinator
+            $application->User->notify(new DeclineApplicationNotification($project));
+        }
         $application->delete();
         return response()->json(['message' => 'Application deleted successfully']);
     }

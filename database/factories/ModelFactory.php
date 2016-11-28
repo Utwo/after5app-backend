@@ -48,7 +48,7 @@ $factory->define(App\Application::class, function (Faker\Generator $faker) {
         'answers' => json_decode('[{"question": "' . $faker->sentence() . '", "text": "' . $faker->sentence() . '"}]'),
         'user_id' => \App\User::all()->random(1)->id,
         'position_id' => \App\Position::all()->random(1)->id,
-        'accepted' => $faker->numberBetween(0, 3)
+        'accepted' => $faker->boolean()
     ];
 });
 
