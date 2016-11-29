@@ -104,6 +104,7 @@ class ApplicationController extends Controller
         if ($application->accepted) {
             //daca stergem un membru, facem statusul la positie inapoi la unu
             $position->status = 1;
+            $position->save();
         }
         if (auth()->user()->id != $application->user_id) {
             //trimitem notificare doar daca aplicatia este stearsa de altcineva decat user-ul apartinator
