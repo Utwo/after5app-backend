@@ -15,7 +15,7 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        header('Access-Control-Allow-Origin: ' . env('ALLOW_ORIGIN'));
+        header('Access-Control-Allow-Origin: ' . env('APP_URL'));
         header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
         header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, Origin');
         header('Access-Control-Max-Age: 10000');

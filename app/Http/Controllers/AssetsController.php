@@ -53,9 +53,10 @@ class AssetsController extends Controller
         $this->authorize('user_contribute_to_project', $project);
         $assets = Asset::pimp()->where('project_id', $project_id)->get();
 
-        $zip_name = time();
+        $zip_name = uniqid();
+        $zip_path = 'arhive/' . $zip_name;
         $zip = new \ZipArchive();
-        if ($zip->open($zip_name, \ZipArchive::CREATE)) {
+        if ($zip->open($zip_path, \ZipArchive::CREATE)) {
             foreach ($assets as $asset) {
                 $path = storage_path("app/{$asset->path}");
                 $zip->addFile($path, $asset->name);
@@ -64,7 +65,8 @@ class AssetsController extends Controller
             return response()->json(['error' => 'Can\'t make zip file']);
         }
         $zip->close();
-        return response()->download($zip_name, $zip_name);
+
+        return response()->download($zip_path, $zip_name);
     }
 
     /**
