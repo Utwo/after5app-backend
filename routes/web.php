@@ -12,8 +12,3 @@
 */
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
-
-Route::post('auth/login', ['uses' => 'Auth\AuthController@login']);
-Route::post('auth/email-authenticate/{token}', ['as' => 'auth.email.post', 'uses' => 'Auth\AuthController@authenticateEmail']);
-
-Route::post('auth/{provider}/callback', ['as' => 'provider.callback', 'uses' => 'Auth\AuthController@handleProviderCallback'])->where('provider', 'facebook|github');

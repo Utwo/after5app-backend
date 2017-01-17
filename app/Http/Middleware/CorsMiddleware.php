@@ -15,18 +15,23 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $headers = [
+        header('Access-Control-Allow-Origin: ' . env('ALLOW_ORIGIN'));
+        header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
+        header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, Origin');
+        header('Access-Control-Max-Age: 10000');
+
+        /*$headers = [
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Allow-Headers' => 'Content-Type, Accept, Authorization, X-Requested-With, Origin',
-            'Access-Control-Max-Age' => '1000'
+            'Access-Control-Max-Age' => '10000'
         ];
 
         if($request->getMethod() == "OPTIONS") {
             // The client-side application can set only headers allowed in Access-Control-Allow-Headers
             return response('OK', 200)->withHeaders($headers);
-        }
+        }*/
 
-        return $next($request)->withHeaders($headers);
+        return $next($request);
     }
 }

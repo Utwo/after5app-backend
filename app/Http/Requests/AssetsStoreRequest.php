@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Project;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Http\FormRequest;
 
-class MessengerStoreRequest extends Request
+class AssetsStoreRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +25,7 @@ class MessengerStoreRequest extends Request
     public function rules()
     {
         return [
-            'text' => 'required|string|min:1|max:250',
+            'assets' => 'required|file|max:80000|mimes:jpeg,png,txt,json',
             'project_id' => 'required|integer|exists:projects,id',
         ];
     }
