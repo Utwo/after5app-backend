@@ -127,6 +127,9 @@ return [
     // Number of items per page
     'per_page' => 10,
 
+    // Max assets allowed per project
+    'max_assets_number' => 6,
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -47,4 +47,9 @@ class Project extends Model
     {
         return $this->hasMany(Messenger::class);
     }
+
+    public function Asset()
+    {
+        return $this->hasMany(Asset::class);
+    }
 }

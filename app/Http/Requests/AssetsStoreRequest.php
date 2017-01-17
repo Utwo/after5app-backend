@@ -14,7 +14,11 @@ class AssetsStoreRequest extends Request
      */
     public function authorize()
     {
-        return Gate::allows('user_contribute_to_project', Project::findOrFail($this->project_id));
+        $project = Project::withCount('Asset')->findOrFail($this->project_id);
+        if ($project->asset_count > config('app.max_assets_number', 6)) {
+            return false;
+        }
+        return Gate::allows('user_contribute_to_project', $project);
     }
 
     /**
