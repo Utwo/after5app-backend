@@ -79,7 +79,9 @@ class AssetsController extends Controller
     {
         $asset_file = $request->file('assets');
         $path = $asset_file->store('assets');
-
+        if (Asset::where('path', $path)->exists()) {
+            return response()->json(['error' => 'File already exists on this project'], 400);
+        }
         $assets = new Asset([
             'name' => $asset_file->getClientOriginalName(),
             'extension' => $asset_file->extension()
