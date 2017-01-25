@@ -14,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'website', 'workplace', 'twitter',
+        'name', 'website', 'workplace', 'twitter', 'hobbies'
     ];
 
     protected $withable = ['skill', 'project', 'favorite'];
@@ -25,6 +25,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = ['picture'];
+
+    protected $casts = [
+        'hobbies' => 'json'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token', 'facebook_token', 'github_token'
+    ];
 
     /**
      * Get the user's profile picture.
@@ -41,15 +54,6 @@ class User extends Authenticatable
         }
         return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token', 'facebook_token', 'github_token'
-    ];
 
     /**
      * Scope a query to only include members of a project.
@@ -69,7 +73,7 @@ class User extends Authenticatable
 
     public function Skill()
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->belongsToMany(Skill::class)->withPivot('skill_level');
     }
 
     public function Comment()

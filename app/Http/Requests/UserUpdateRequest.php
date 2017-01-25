@@ -26,8 +26,8 @@ class UserUpdateRequest extends Request
             'workplace' => 'sometimes|present|nullable|string|min:3',
             'twitter' => 'sometimes|present|nullable|string|min:3',
             'website' => 'sometimes|present|nullable|url',
-            'skill' => 'sometimes|json_valid|array',
-            'skill.*' => 'required_with:skill|string|min:1|max:15'
+            'hobbies' => 'sometimes|json_valid|array',
+            'hobbies.*' => 'required_with:hobbies|string|min:1|max:15'
         ];
     }
 }

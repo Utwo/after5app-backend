@@ -19,7 +19,12 @@ class UserTableSeeder extends Seeder
         $users = factory(App\User::class, 10)->create();
         //users[] = $my_user;
         foreach ($users as $user) {
-            $user->Skill()->attach(\App\Skill::all()->random(4)->pluck('id')->toArray());
+            $skills = \App\Skill::all()->random(4)->pluck('id')->toArray();
+            $skills_with_level = [];
+            foreach ($skills as $key => $skill) {
+                $skills_with_level[$skill] = ['skill_level' => random_int(1, 100)];
+            }
+            $user->Skill()->attach($skills_with_level);
         }
     }
 }

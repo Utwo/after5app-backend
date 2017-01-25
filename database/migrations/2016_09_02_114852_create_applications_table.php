@@ -17,7 +17,7 @@ class CreateApplicationsTable extends Migration
             $table->increments('id');
 
             $table->string('message');
-            $table->text('answers');
+            $table->text('answers'); //json
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('position_id');
             $table->boolean('accepted')->default(0); // 0-pending, 1-accepted

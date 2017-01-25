@@ -54,6 +54,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::delete('application/{application}', ['uses' => 'ApplicationController@destroy']);
 
             Route::put('user', ['uses' => 'UserController@update']);
+            Route::put('user/skill', ['uses' => 'UserController@update_skill']);
 
             Route::get('project/{project}/assets', ['uses' => 'AssetsController@index']);
             Route::get('project/{project}/assets/download', ['as' => 'download_all_assets', 'uses' => 'AssetsController@download_all']);

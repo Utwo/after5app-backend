@@ -12,12 +12,17 @@
 */
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
+    $hobbies = [];
+    for ($i = 0; $i <= random_int(1, 6); $i++) {
+        $hobbies[] = $faker->word();
+    }
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
         'workplace' => $faker->company,
         'twitter' => $faker->colorName,
-        'website' => $faker->url
+        'website' => $faker->url,
+        'hobbies' => $hobbies
     ];
 });
 
