@@ -17,6 +17,7 @@ class AddColumnsToUsersTable extends Migration
             $table->text('hobbies'); //json
             $table->text('description')->nullable();
             $table->string('city')->nullable();
+            $table->boolean('notify_email')->default(1);
         });
     }
 

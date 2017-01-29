@@ -32,7 +32,7 @@ class AddApplicationNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return $notifiable->notify_email ? ['database', 'mail'] : ['database'];
     }
 
     /**

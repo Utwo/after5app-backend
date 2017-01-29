@@ -25,6 +25,7 @@ class UserUpdateRequest extends Request
             'name' => 'sometimes|present|nullable|string|min:3|max:20',
             'description' => 'sometimes|present|nullable|string|min:2|max:400',
             'city' => 'sometimes|present|nullable|string|min:2|max:255',
+            'notify_email' => 'sometimes|required|boolean',
             'workplace' => 'sometimes|present|nullable|string|min:3|max:255',
             'twitter' => 'sometimes|present|nullable|string|min:3|max:255',
             'website' => 'sometimes|present|nullable|url',

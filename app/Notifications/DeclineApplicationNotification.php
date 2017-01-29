@@ -30,7 +30,7 @@ class DeclineApplicationNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return $notifiable->notify_email ? ['database', 'mail'] : ['database'];
     }
 
     /**
