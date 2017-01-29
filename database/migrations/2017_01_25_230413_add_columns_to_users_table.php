@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddHobbiesToUsersTable extends Migration
+class AddColumnsToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,8 @@ class AddHobbiesToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->text('hobbies'); //json
+            $table->text('description')->nullable();
+            $table->string('city')->nullable();
         });
     }
 
@@ -27,6 +29,8 @@ class AddHobbiesToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('hobbies');
+            $table->dropColumn('description');
+            $table->dropColumn('city');
         });
     }
 }

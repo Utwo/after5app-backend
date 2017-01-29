@@ -22,6 +22,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'workplace' => $faker->company,
         'twitter' => $faker->colorName,
         'website' => $faker->url,
+        'description' => $faker->sentence,
+        'city' => $faker->city,
         'hobbies' => $hobbies
     ];
 });
