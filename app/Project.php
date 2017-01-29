@@ -20,7 +20,7 @@ class Project extends Model
         'user_id' => 'integer',
     ];
 
-    protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'user'];
+    protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'position.member', 'user'];
 
 
     public function User()

@@ -27,7 +27,8 @@ class User extends Authenticatable
     protected $appends = ['picture'];
 
     protected $casts = [
-        'hobbies' => 'json'
+        'hobbies' => 'json',
+        'notify_email' => 'boolean'
     ];
 
     /**

@@ -26,6 +26,14 @@ class Position extends Model
      */
     public $timestamps = false;
 
+    /**
+     * Get all members for the project.
+     */
+    public function Member()
+    {
+        return $this->belongsToMany('App\User', 'applications')->where('accepted', true);
+    }
+
     public function Project()
     {
         return $this->belongsTo(Project::class);
