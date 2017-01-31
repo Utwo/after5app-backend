@@ -172,8 +172,7 @@ return [
         /*
          * Package Service Providers...
          */
-
-        //
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -185,7 +184,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+        //Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+
     ],
 
     /*
@@ -205,6 +205,8 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
+        'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
@@ -234,7 +236,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
+        //'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
     ],
 
 ];
