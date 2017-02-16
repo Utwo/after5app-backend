@@ -22,6 +22,13 @@ class Project extends Model
 
     protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'position.member', 'user'];
 
+    /**
+     * Get all applications for a given project.
+     */
+    public function Application()
+    {
+        return $this->hasManyThrough('App\Application', 'App\Position');
+    }
 
     public function User()
     {

@@ -37,9 +37,9 @@ class PositionTableSeeder extends Seeder
 
     private function generate_unique_skill($skills)
     {
-        $skill_id = $skills->random(1)->id;
+        $skill_id = $skills->random(1)->first()->id;
         while (in_array($skill_id, $this->taken_skills)) {
-            $skill_id = $skills->random(1)->id;
+            $skill_id = $skills->random(1)->first()->id;
         }
         $this->taken_skills[] = $skill_id;
         return $skill_id;

@@ -17,7 +17,7 @@ class FavoriteTableSeeder extends Seeder
         $projects = \App\Project::all();
         foreach ($users as $user) {
             for ($i = 0; $i <= random_int(0, 20); $i++) {
-                $user->favorite()->syncWithoutDetaching([$projects->random(1)->id]);
+                $user->favorite()->syncWithoutDetaching([$projects->random(1)->first()->id]);
             }
         }
     }

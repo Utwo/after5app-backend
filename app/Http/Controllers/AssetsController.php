@@ -54,7 +54,7 @@ class AssetsController extends Controller
         $assets = Asset::pimp()->where('project_id', $project_id)->get();
 
         $zip_name = uniqid();
-        $zip_path = 'arhive/' . $zip_name;
+        $zip_path = storage_path("app/arhive/{$zip_name}");
         $zip = new \ZipArchive();
         if ($zip->open($zip_path, \ZipArchive::CREATE)) {
             foreach ($assets as $asset) {

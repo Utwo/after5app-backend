@@ -40,7 +40,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'description' => $faker->paragraph(rand(3, 6)),
         'application_questions' => $array,
         'status' => $faker->boolean(),
-        'user_id' => \App\User::all()->random(1)->id
+        'user_id' => \App\User::all()->random(1)->first()->id
     ];
 });
 
@@ -54,8 +54,8 @@ $factory->define(App\Application::class, function (Faker\Generator $faker) {
     return [
         'message' => $faker->sentence(),
         'answers' => json_decode('[{"question": "' . $faker->sentence() . '", "text": "' . $faker->sentence() . '"}]'),
-        'user_id' => \App\User::all()->random(1)->id,
-        'position_id' => \App\Position::all()->random(1)->id,
+        'user_id' => \App\User::all()->random(1)->first()->id,
+        'position_id' => \App\Position::all()->random(1)->first()->id,
         'accepted' => $faker->boolean()
     ];
 });
@@ -63,15 +63,15 @@ $factory->define(App\Application::class, function (Faker\Generator $faker) {
 $factory->define(App\Comment::class, function (Faker\Generator $faker) {
     return [
         'text' => $faker->sentence(),
-        'user_id' => \App\User::all()->random(1)->id,
-        'project_id' => \App\Project::all()->random(1)->id,
+        'user_id' => \App\User::all()->random(1)->first()->id,
+        'project_id' => \App\Project::all()->random(1)->first()->id,
     ];
 });
 
 $factory->define(App\Position::class, function (Faker\Generator $faker) {
     return [
-        'skill_id' => \App\Skill::all()->random(1)->id,
-        'project_id' => \App\Project::all()->random(1)->id,
+        'skill_id' => \App\Skill::all()->random(1)->first()->id,
+        'project_id' => \App\Project::all()->random(1)->first()->id,
         'description' => $faker->sentence(),
         'status' => $faker->boolean(),
     ];

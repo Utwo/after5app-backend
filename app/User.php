@@ -17,7 +17,7 @@ class User extends Authenticatable
         'name', 'description', 'city', 'website', 'workplace', 'twitter', 'hobbies', 'notify_email'
     ];
 
-    protected $withable = ['skill', 'project', 'favorite'];
+    protected $withable = ['skill', 'project', 'favorite', 'position', 'position.project'];
 
     /**
      * The accessors to append to the model's array form.
@@ -85,6 +85,14 @@ class User extends Authenticatable
     public function Application()
     {
         return $this->hasMany(Application::class);
+    }
+
+    /**
+     * Get all positions of a user.
+     */
+    public function Position()
+    {
+        return $this->belongsToMany('App\Position', 'applications')->where('accepted', true);
     }
 
     public function Project()

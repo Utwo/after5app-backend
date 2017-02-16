@@ -24,7 +24,7 @@ class MessengerTableSeeder extends Seeder
 
             for ($i = 0; $i <= random_int(0, 100); $i++) {
                 \Illuminate\Support\Facades\DB::table('messengers')->insert([
-                    'message' => '{"text": "' . $faker->sentence() . '", "user_id": "' . $users->random(1)->id . '", "user_name": "' . $users->random(1)->name . '"}',
+                    'message' => '{"text": "' . $faker->sentence() . '", "user_id": "' . $users->random(1)->first()->id . '", "user_name": "' . $users->random(1)->first()->name . '"}',
                     'project_id' => $project->id
                 ]);
             }

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Route;
 
 class CorsMiddleware
 {
@@ -15,12 +16,7 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        header('Access-Control-Allow-Origin: ' . env('APP_URL'));
-        header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
-        header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, Origin');
-        header('Access-Control-Max-Age: 10000');
-
-        /*$headers = [
+        $headers = [
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Allow-Headers' => 'Content-Type, Accept, Authorization, X-Requested-With, Origin',
@@ -30,8 +26,15 @@ class CorsMiddleware
         if($request->getMethod() == "OPTIONS") {
             // The client-side application can set only headers allowed in Access-Control-Allow-Headers
             return response('OK', 200)->withHeaders($headers);
-        }*/
+        }
 
-        return $next($request);
+        $response = $next($request);
+        foreach($headers as $key => $header){
+            $response->headers->set($key , $header);
+        }
+
+        return $response;
+
+        //return $next($request)->withHeaders($headers);
     }
 }
