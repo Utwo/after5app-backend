@@ -66,7 +66,7 @@ class AssetsController extends Controller
         }
         $zip->close();
 
-        return response()->download($zip_path, $zip_name);
+        return response()->download($zip_path, $zip_name)->deleteFileAfterSend(true);;
     }
 
     /**
