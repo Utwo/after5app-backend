@@ -20,24 +20,20 @@ io.on('connection', socketioJwt.authorize({
     timeout: 10000 // 10 seconds to send the authentication message
 })).on('authenticated', function (socket) {
     //this socket is authenticated, we are good to handle more events from it.
-    console.log('user ' + socket.decoded_token.sub + ' connected');
+    //console.log('user ' + socket.decoded_token.sub + ' connected');
 
     socket.on('disconnect', function () {
-        console.log('user ' + socket.decoded_token.sub + ' disconnected');
+        //console.log('user ' + socket.decoded_token.sub + ' disconnected');
         redis.removeListener('pmessage', redis_handler);
         //redis.quit()
         socket.disconnect();
     });
 
     var redis_handler = function(subscribed, channel, message) {
-        console.log('channel', channel)
-        console.log('subscribed', subscribed)
-        console.log('message', message)
-        //if (channel == 'user.' + socket.decoded_token.sub) {
+        if (channel == 'private-App.User.' + socket.decoded_token.sub) {
             message = JSON.parse(message);
-            console.log('write to ' + channel + ' channel');
             io.emit(channel, message.data);
-        //}
+        }
     };
 
     redis.on("pmessage", redis_handler);
