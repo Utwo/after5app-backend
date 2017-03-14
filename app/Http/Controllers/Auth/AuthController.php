@@ -73,6 +73,12 @@ class AuthController extends Controller
         $provider_id = $provider . '_id';
         $provider_token = $provider . '_token';
 
+        $social = $authUser->social === null ? [] : $authUser->social;
+        if ($user->getNickname() != null) {
+            $social[$provider] = $user->getNickname();
+            $authUser->social = $social;
+        }
+
         $authUser->$provider_id = $user->getId();
         $authUser->$provider_token = $user->token;
         $authUser->name = $user->getName();

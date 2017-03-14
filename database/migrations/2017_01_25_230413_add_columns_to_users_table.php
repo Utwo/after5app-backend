@@ -15,6 +15,7 @@ class AddColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->text('hobbies')->nullable(); //json
+            $table->text('social')->nullable(); //json
             $table->text('description')->nullable();
             $table->string('city')->nullable();
             $table->boolean('notify_email')->default(1);

@@ -30,7 +30,9 @@ class UserUpdateRequest extends Request
             'twitter' => 'sometimes|present|nullable|string|min:3|max:255',
             'website' => 'sometimes|present|nullable|url',
             'hobbies' => 'sometimes|json_valid|array',
-            'hobbies.*' => 'required_with:hobbies|string|min:1|max:15'
+            'hobbies.*' => 'required_with:hobbies|string|min:1|max:15',
+            'social' => 'sometimes|json_valid|array|max:3',
+            'social.*' => 'sometimes|string|min:1|max:15'
         ];
     }
 }

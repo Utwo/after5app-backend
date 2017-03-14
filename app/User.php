@@ -8,13 +8,14 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use ModelTrait, Notifiable;
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'city', 'website', 'workplace', 'twitter', 'hobbies', 'notify_email'
+        'name', 'description', 'city', 'website', 'workplace', 'twitter', 'hobbies', 'social', 'notify_email'
     ];
 
     protected $withable = ['skill', 'project', 'favorite', 'position', 'position.project'];
@@ -28,6 +29,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'hobbies' => 'json',
+        'social' => 'json',
         'notify_email' => 'boolean'
     ];
 
