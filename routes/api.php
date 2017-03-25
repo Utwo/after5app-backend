@@ -26,7 +26,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('skill', ['uses' => 'SkillController@index']);
     Route::get('user/{user?}', ['uses' => 'UserController@index'])->middleware(['jwt.optional']);
 
-    Route::group(['middleware' => ['jwt.auth']], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
 
         Route::get('notification/count', ['uses' => 'NotificationController@notification_count']);
         Route::get('notification', ['uses' => 'NotificationController@index']);

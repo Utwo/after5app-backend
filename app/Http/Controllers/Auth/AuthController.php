@@ -6,7 +6,6 @@ use App\EmailLogin;
 use App\Notifications\EmailLoginNotification;
 use App\User;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
@@ -35,7 +34,7 @@ class AuthController extends Controller
     {
         $emailLogin = EmailLogin::validFromToken($request->token);
         $user = User::where('email', $emailLogin->email)->firstOrFail();
-        $token = JWTAuth::fromUser($user);
+        $token = auth()->login($user);
         return response()->json(['user' => $user, 'token' => $token]);
     }
 
@@ -53,7 +52,7 @@ class AuthController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($provider, $user);
-        $token = JWTAuth::fromUser($authUser);
+        $token = auth()->login($authUser);
         return response()->json(['user' => $authUser, 'token' => $token]);
     }
 

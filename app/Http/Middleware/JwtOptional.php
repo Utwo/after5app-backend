@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Tymon\JWTAuth\Middleware\GetUserFromToken;
+use Tymon\JWTAuth\Http\Middleware\Authenticate;
 
-class JwtOptional extends GetUserFromToken
+class JwtOptional extends Authenticate
 {
     /**
      * Handle an incoming request.

@@ -2,7 +2,6 @@ version: "2"
 
 services:
   nginx:
-    # build: ./docker/nginx
     image: nginx:latest
     ports:
       - 8000:80
@@ -13,7 +12,7 @@ services:
     volumes:
       - .:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/nginx/sites-enabled/node.conf:/etc/nginx/conf.d/sites-enabled/node.conf
+      # - ./docker/nginx/sites-enabled/node.conf:/etc/nginx/conf.d/sites-enabled/node.conf
 
   php:
     build: ./docker/php

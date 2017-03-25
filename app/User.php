@@ -2,10 +2,11 @@
 
 namespace App;
 
+use Tymon\JWTAuth\Contracts\JWTSubject as AuthenticatableUserContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements AuthenticatableUserContract
 {
     use ModelTrait, Notifiable;
     
@@ -41,6 +42,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'facebook_token', 'github_token'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();  // Eloquent model method
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * Get the user's profile picture.
