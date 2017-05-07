@@ -16,7 +16,7 @@ class SkillController extends Controller
      */
     public function index()
     {
-        $skill = Skill::pimp()->get();
+        $skill = Skill::pimp()->simplePaginate(config('app.per_page'));
         return response()->json($skill);
     }
 }

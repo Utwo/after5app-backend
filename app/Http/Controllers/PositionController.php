@@ -37,7 +37,7 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Requests\PositionUpdateRequest|Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -51,8 +51,9 @@ class PositionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function destroy(Request $request)
     {

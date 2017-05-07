@@ -102,12 +102,8 @@ class AssetsController extends Controller
      */
     public function destroy(Request $request, $asset_id)
     {
-        // TODO cand sterg project sau assets sa-mi stearga automat si fisierele, eventual cu hook
         $asset = Asset::with('Project')->findOrFail($asset_id);
         $this->authorize('user_contribute_to_project', $asset->Project);
-        if (Storage::exists($asset->path)) {
-            Storage::delete($asset->path);
-        }
         $asset->delete();
         return response()->json(['message' => 'Asset deleted successfully']);
     }

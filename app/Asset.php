@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\AssetDeleting;
 use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
@@ -23,6 +24,15 @@ class Asset extends Model
         'project_id' => 'integer',
         'user_id' => 'integer'
     ];
+
+	/**
+	 * The event map for the model.
+	 *
+	 * @var array
+	 */
+	protected $events = [
+		'deleting' => AssetDeleting::class,
+	];
 
     public function Project(){
         return $this->belongsTo(Project::class);

@@ -29,7 +29,7 @@ class AssetsStoreRequest extends Request
     public function rules()
     {
         return [
-            'assets' => 'required|file|max:80000|mimes:jpeg,png,txt,json',
+            'assets' => 'required|file|max:80000|mimes:jpeg,png,txt,json,doc,docx,pdf,ptt,psd',
             'project_id' => 'required|integer|exists:projects,id',
         ];
     }

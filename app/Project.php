@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ProjectDeleting;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -21,6 +22,15 @@ class Project extends Model
     ];
 
     protected $withable = ['comment', 'comment.user', 'favorite', 'position', 'position.skill', 'position.member', 'user'];
+
+	/**
+	 * The event map for the model.
+	 *
+	 * @var array
+	 */
+	protected $events = [
+		'deleting' => ProjectDeleting::class,
+	];
 
     /**
      * Get all applications for a given project.

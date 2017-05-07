@@ -4,6 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
     <style type="text/css" rel="stylesheet" media="all">
         /* Media Queries */
@@ -25,7 +26,8 @@ $style = [
 
     /* Masthead ----------------------- */
 
-    'email-masthead' => 'padding: 25px 0; text-align: center;',
+    'email-masthead-left' => 'padding: 25px 0 25px 25px; background-color: #7874dc; border-radius: 5px 0 0 0;',
+    'email-masthead-right' => 'padding: 25px 25px 25px 0; background-color: #7874dc; border-radius: 0 5px 0 0; text-align:right; color: #fff;',
     'email-masthead_name' => 'font-size: 16px; font-weight: bold; color: #2F3133; text-decoration: none; text-shadow: 0 1px 0 white;',
 
     'email-body' => 'width: 100%; margin: 0; padding: 0; border-top: 1px solid #EDEFF2; border-bottom: 1px solid #EDEFF2; background-color: #FFF;',
@@ -56,11 +58,11 @@ $style = [
 
     'button--green' => 'background-color: #22BC66;',
     'button--red' => 'background-color: #dc4d2f;',
-    'button--blue' => 'background-color: #3869D4;',
+    'button--blue' => 'background-color: #50e3c2;',
 ];
 ?>
 
-<?php $fontFamily = 'font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif;'; ?>
+<?php $fontFamily = 'font-family: Roboto, \'Helvetica Neue\', Helvetica, sans-serif;'; ?>
 
 <body style="{{ $style['body'] }}">
     <table width="100%" cellpadding="0" cellspacing="0">
@@ -69,16 +71,21 @@ $style = [
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <!-- Logo -->
                     <tr>
-                        <td style="{{ $style['email-masthead'] }}">
+                        <td style="{{ $style['email-masthead-left'] }}">
                             <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ config('app.url') }}" target="_blank">
-                                {{ config('app.name') }}
+                                <img border="0" src="http://after5app.co/assets/svg/logo.svg" alt="{{ config('app.name') }}" title="{{ config('app.name') }}" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;width: 100%;max-width: 121px" width="121">
+                            </a>
+                        </td>
+                        <td style="{{ $style['email-masthead-right'] }}">
+                            <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ config('app.url') }}" target="_blank">
+                                <img border="0" src="http://after5app.co/assets/svg/febee.svg" alt="Febee" title="Febee" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline !important;border: none;height: auto;width: 100%;max-width: 45px; vertical-align: middle; padding: 0 0 0 10px;" width="45">
                             </a>
                         </td>
                     </tr>
 
                     <!-- Email Body -->
                     <tr>
-                        <td style="{{ $style['email-body'] }}" width="100%">
+                        <td colspan="2" style="{{ $style['email-body'] }}" width="100%">
                             <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}">
@@ -170,7 +177,7 @@ $style = [
 
                     <!-- Footer -->
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <table style="{{ $style['email-footer'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">

@@ -53,7 +53,7 @@ $factory->define(App\Skill::class, function (Faker\Generator $faker) {
 $factory->define(App\Application::class, function (Faker\Generator $faker) {
     return [
         'message' => $faker->sentence(),
-        'answers' => json_decode('[{"question": "' . $faker->sentence() . '", "text": "' . $faker->sentence() . '"}]'),
+        'answers' => [ $faker->sentence() ],
         'user_id' => \App\User::all()->random(1)->first()->id,
         'position_id' => \App\Position::all()->random(1)->first()->id,
         'accepted' => $faker->boolean()
