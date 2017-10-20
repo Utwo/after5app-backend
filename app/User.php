@@ -70,9 +70,9 @@ class User extends Authenticatable implements AuthenticatableUserContract
             return "https://avatars.githubusercontent.com/u/{$this->github_id}";
         }
         if ($this->facebook_id) {
-            return "http://graph.facebook.com/{$this->facebook_id}/picture";
+            return "https://graph.facebook.com/{$this->facebook_id}/picture";
         }
-        return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
+        return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 
     /**
