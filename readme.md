@@ -46,7 +46,7 @@ $ php artisan key:generate
 - generate a new key for your application
 
 ```
-$ php artisan jwt:generate
+$ php artisan jwt:secret
 ```
 - generate a new key for JWT token
 
@@ -67,6 +67,12 @@ $ php artisan
 ```
 - for a list of all available commands
 
+### Run tests ###
+
+```
+$ phpunit
+```
+- run tests
 
 ### Database ###
 

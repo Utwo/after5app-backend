@@ -23,9 +23,16 @@ class MessengerTableSeeder extends Seeder
             $users = $users->merge($project->User()->get());
 
             for ($i = 0; $i <= random_int(0, 100); $i++) {
+                $msessege = [
+                    "text" => $faker->sentence(),
+                    "user_id" => $users->random(1)->first()->id,
+                    "user_name" => $users->random(1)->first()->name
+                ];
+
                 \Illuminate\Support\Facades\DB::table('messengers')->insert([
-                    'message' => '{"text": "' . $faker->sentence() . '", "user_id": "' . $users->random(1)->first()->id . '", "user_name": "' . $users->random(1)->first()->name . '"}',
-                    'project_id' => $project->id
+                    'message' => json_encode($msessege),
+                    'project_id' => $project->id,
+                    'created_at' =>  \Carbon\Carbon::now()
                 ]);
             }
         }
