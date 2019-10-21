@@ -20,13 +20,3 @@ jobs:
         run: docker tag after5app:latest docker.pkg.github.com/utwo/after5app-backend/after5app
       - name: Push the Docker image to the registry
         run: docker push docker.pkg.github.com/utwo/after5app-backend/after5app
-
-      - name: Authenticate into Google Cloud Platform
-        uses: actions/gcloud/auth@master
-        env:
-          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
-
-      - name: Install beta commands and deploy on cloud run
-        uses: actions/gcloud/cli@master
-        with:
-          args: "components install beta --quiet && gcloud beta run deploy ${{ secrets.GCLOUD_PROJECT }} --quiet --image docker.pkg.github.com/Utwo/after5app-backend/after5app --project ${{ secrets.GCLOUD_PROJECT }} --region europe-west1 --platform managed"
