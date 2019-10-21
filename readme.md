@@ -1,7 +1,7 @@
 # After5app backend
 Restful API based app, php7 with laravel
 
-[![buddy pipeline](https://app.buddy.works/oanamuntean8/backend/pipelines/pipeline/41634/badge.svg?token=413a5bdcf3c74d83fdb0047cf554673026828cd77b89904ec57572465a4c7280 "buddy pipeline")](https://app.buddy.works/oanamuntean8/backend/pipelines/pipeline/41634)
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5b553a5fdab9037961dd)
 
